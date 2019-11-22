@@ -5,7 +5,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+//import LinksScreen from '../screens/LinksScreen';
+import ScannerScreen from '../screens/ScannerScreen'
 import SettingsScreen from '../screens/SettingsScreen';
 
 const config = Platform.select({
@@ -36,21 +37,36 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = '';
 
-const LinksStack = createStackNavigator(
+// const LinksStack = createStackNavigator(
+//   {
+//     Links: LinksScreen,
+//   },
+//   config
+// );
+
+// LinksStack.navigationOptions = {
+//   tabBarLabel: 'Links',
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+//   ),
+// };
+
+// LinksStack.path = '';
+
+const ScannerStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Scanner: ScannerScreen
   },
   config
-);
+)
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
-};
+ScannerStack.navigationOptions = {
+  tabBarLabel: 'Scanner',
+  tabBarIcon: ({focused}) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-barcode' : 'md-barcode'} />
+  )
+}
 
-LinksStack.path = '';
 
 const SettingsStack = createStackNavigator(
   {
@@ -70,8 +86,9 @@ SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  LinksStack,
+  //LinksStack,
   SettingsStack,
+  ScannerStack
 });
 
 tabNavigator.path = '';
