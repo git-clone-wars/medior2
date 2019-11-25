@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Text, View, StyleSheet, Button } from 'react-native'
 import * as Permissions from 'expo-permissions'
 import { BarCodeScanner } from 'expo-barcode-scanner'
-import isbnScanSearch from '../external-APIs'
+import isbnScanSearch from '../external-APIs/booksApi'
 
 export default class Scanner extends React.Component {
   state = {
@@ -55,8 +55,9 @@ export default class Scanner extends React.Component {
     this.setState({ scanned: true })
     try {
       const foundBook = await isbnScanSearch(data)
+      console.log(foundBook.items[0].volumeInfo.title)
       alert(
-        `Search returned the book ${foundBook.items[0].title} by ${foundBook.items[0].authors[0]}`
+        `Search returned the book ${foundBook.items[0].volumeInfo.title} by ${foundBook.items[0].volumeInfo.authors[0]}`
       )
     } catch (error) {
       console.log(`sorry not found ${error}`)
