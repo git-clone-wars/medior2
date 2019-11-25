@@ -10,7 +10,7 @@ export default class Scanner extends React.Component {
     scanned: false,
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.getPermissionsAsync()
   }
 
