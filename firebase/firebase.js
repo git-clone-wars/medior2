@@ -10,7 +10,7 @@ export default class FirebaseWrapper {
     this._firestore = null;
   }
 
-  Initialize(config) {
+  initialize(config) {
     if (!this.initialized) {
       // initialize firebase
       this._firebaseInstance = firebase.initializeApp(config);
@@ -21,7 +21,7 @@ export default class FirebaseWrapper {
     }
   }
 
-  static GetInstance() {
+  static getInstance() {
     // how we're going to refer to this class outside of our wrapper
     if (null == this._firebaseWrapperInstance) {
       this._firebaseWrapperInstance = new FirebaseWrapper();
@@ -31,6 +31,9 @@ export default class FirebaseWrapper {
 
   signInEmailPassword(email, password) {
     try {
+      console.log('1', this)
+      console.log('2', this._firebaseWrapperInstance)
+      console.log('3', this._firebaseWrapperInstance.auth())
       this._firebaseWrapperInstance.auth().signInWithEmailAndPassword(email, password)
     } catch (error) {
       var errorCode = error.code
@@ -51,7 +54,9 @@ export default class FirebaseWrapper {
 
   createUserEmailPassword(email, password) {
     try {
-        this._firebaseWrapperInstance.auth().createUserWithEmailAndPassword(email, password)
+      console.log('2', this._firebaseInstance)
+      console.log('3', this._firebaseInstance.auth())
+        this._firebaseInstance.auth().createUserWithEmailAndPassword(email, password)
 
     } catch (error) {
       var errorCode = error.code

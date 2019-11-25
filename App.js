@@ -11,7 +11,7 @@ import AppNavigator from './navigation/AppNavigator';
 
 export default function App(props) {
 
-  FirebaseWrapper.GetInstance().Initialize(firebaseConfig)
+  FirebaseWrapper.getInstance().initialize(firebaseConfig)
 
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 

@@ -20,8 +20,8 @@ export default function SignUpLogin(){
 return (
     <View>
 
-    <AuthModal type='Sign Up' handleSubmit={(email, password)=> FirebaseWrapper.GetInstance().createUserEmailPassword(email, password)}/>
-    <AuthModal type='Log in' handleSubmit={(email, password)=> FirebaseWrapper.GetInstance().signInEmailPassword(email, password)}/>
+    <AuthModal type='Sign Up' handleSubmit={(email, password)=> FirebaseWrapper.getInstance().createUserEmailPassword(email, password)}/>
+    <AuthModal type='Log in' handleSubmit={(email, password)=> FirebaseWrapper.getInstance().signInEmailPassword(email, password)}/>
 
     </View>
 
@@ -43,7 +43,7 @@ class AuthModal extends Component{
 
   handleSubmit(props){
     console.log('ARE THESE MY PROPS', props)
-    //this.props.handleSubmit(props)
+    this.props.handleSubmit(props.email, props.password)
   }
 
   render (){
@@ -60,7 +60,7 @@ class AuthModal extends Component{
           type={ User }/>
           <Button
           title={this.props.type}
-          onPress={this.handleSubmit(this.state.form)} />
+          onPress={()=> this.handleSubmit(this._form.getValue())} />
         </View>
       </Modal>
 
