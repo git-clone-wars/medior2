@@ -9,5 +9,6 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+firebase/firebaseConfig.js
 secrets.js
-firebaseConfig.js
+
