@@ -14,6 +14,8 @@ const User = t.struct({
 
 });
 
+
+
 export default function SignUpLogin(){
 return (
     <View>
@@ -47,6 +49,7 @@ class AuthModal extends Component{
       transparent={false}
       visible= {this.state.modalVisible} >
         <View style={styles.container}>
+          <Text style={styles.formlabel}>{this.props.type} </Text>
           <Form type={ User}/>
         </View>
       </Modal>
@@ -69,6 +72,13 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#ffffff',
     flex: 1
+  },
+
+  formlabel: {
+    fontSize: 17,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 24,
+    textAlign: 'center',
   }
 
 })
