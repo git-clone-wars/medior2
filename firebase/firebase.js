@@ -2,7 +2,7 @@ import * as firebase from 'firebase';
 
 import 'firebase/firestore'
 
-export class FirebaseWrapper {
+export default class FirebaseWrapper {
   constructor() {
     this.initialized = false;
     this._firebaseInstance = null; // instance of our npm package
@@ -28,4 +28,37 @@ export class FirebaseWrapper {
     }
     return this._firebaseWrapperInstance;
   }
+
+  signInEmailPassword(email, password) {
+    try {
+      this._firebaseWrapperInstance.auth().signInWithEmailAndPassword(email, password)
+    } catch (error) {
+      var errorCode = error.code
+      var errorMessage = error.message
+      console.log('Trouble signing in ?', errorCode, errorMessage)
+    }
+
+  }
+
+  signOut() {
+    try {
+      this._firebaseWrapperInstance.auth().signOut()
+    } catch (error) {
+      console.log('Trouble signing out ?', error)
+    }
+
+  }
+
+  createUserEmailPassword(email, password) {
+    try {
+        this._firebaseWrapperInstance.auth().createUserWithEmailAndPassword(email, password)
+
+    } catch (error) {
+      var errorCode = error.code
+      var errorMessage = error.message
+      console.log('Trouble signing up ?', errorCode, errorMessage)
+    }
+  }
+
+
 }
