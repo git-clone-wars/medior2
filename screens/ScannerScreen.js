@@ -55,7 +55,7 @@ export default class Scanner extends React.Component {
     this.setState({ scanned: true })
     try {
       const foundBook = await isbnScanSearch(data)
-      console.log(foundBook.items[0].volumeInfo.title)
+      console.log(foundBook.items[0].volumeInfo)
       alert(
         `Search returned the book ${foundBook.items[0].volumeInfo.title} by ${foundBook.items[0].volumeInfo.authors[0]}`
       )
