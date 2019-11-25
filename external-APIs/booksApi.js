@@ -1,4 +1,4 @@
-const booksAPIKey = require('./secrets')
+import booksAPIKey from '../secrets'
 import axios from 'axios'
 
 export const isbnScanSearch = async isbnNum => {
@@ -6,7 +6,7 @@ export const isbnScanSearch = async isbnNum => {
     const { data } = await axios.get(
       `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbnNum}:keyes&key=${booksAPIKey}`
     )
-    console.log(data)
+    return data
   } catch (error) {
     console.log(error)
   }
