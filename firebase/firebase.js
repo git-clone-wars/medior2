@@ -31,10 +31,7 @@ export default class FirebaseWrapper {
 
   signInEmailPassword(email, password) {
     try {
-      console.log('1', this)
-      console.log('2', this._firebaseWrapperInstance)
-      console.log('3', this._firebaseWrapperInstance.auth())
-      this._firebaseWrapperInstance.auth().signInWithEmailAndPassword(email, password)
+      this._firebaseInstance.auth().signInWithEmailAndPassword(email, password)
     } catch (error) {
       var errorCode = error.code
       var errorMessage = error.message
@@ -45,7 +42,7 @@ export default class FirebaseWrapper {
 
   signOut() {
     try {
-      this._firebaseWrapperInstance.auth().signOut()
+      this._firebaseInstance.auth().signOut()
     } catch (error) {
       console.log('Trouble signing out ?', error)
     }
@@ -54,8 +51,6 @@ export default class FirebaseWrapper {
 
   createUserEmailPassword(email, password) {
     try {
-      console.log('2', this._firebaseInstance)
-      console.log('3', this._firebaseInstance.auth())
         this._firebaseInstance.auth().createUserWithEmailAndPassword(email, password)
 
     } catch (error) {
