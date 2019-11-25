@@ -20,8 +20,8 @@ export default function SignUpLogin(){
 return (
     <View>
 
-    <AuthModal type='Sign Up'/>
-    <AuthModal type='Log in'/>
+    <AuthModal type='Sign Up' handleSubmit={(email, password)=> FirebaseWrapper.GetInstance().createUserEmailPassword(email, password)}/>
+    <AuthModal type='Log in' handleSubmit={(email, password)=> FirebaseWrapper.GetInstance().signInEmailPassword(email, password)}/>
 
     </View>
 
@@ -31,14 +31,19 @@ return (
 
 class AuthModal extends Component{
   constructor (props) {
-    super()
+    super(props)
     this.state = {
-      modalVisible: false
+      modalVisible: false,
     }
   }
 
   setModalVisible (visible){
     this.setState({modalVisible: visible})
+  }
+
+  handleSubmit(props){
+    console.log('ARE THESE MY PROPS', props)
+    //this.props.handleSubmit(props)
   }
 
   render (){
@@ -49,8 +54,13 @@ class AuthModal extends Component{
       transparent={false}
       visible= {this.state.modalVisible} >
         <View style={styles.container}>
-          <Text style={styles.formlabel}>{this.props.type} </Text>
-          <Form type={ User}/>
+          {/* <Text> [x] </Text> */}
+          <Form
+          ref = { c => this._form = c}
+          type={ User }/>
+          <Button
+          title={this.props.type}
+          onPress={this.handleSubmit(this.state.form)} />
         </View>
       </Modal>
 
