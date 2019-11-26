@@ -1,6 +1,7 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import SignUp-Login from './'
+import SignUpLogin from '../screens/SignUp-Login'
+import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 
 import MainTabNavigator from './MainTabNavigator';
 
@@ -11,5 +12,8 @@ export default createAppContainer(
     AuthLoading: AuthLoadingScreen,
     Main: MainTabNavigator,
     Auth: SignUpLogin
+  },
+  {
+    initialRouteName: 'AuthLoading'
   })
 );

@@ -16,11 +16,15 @@ const User = t.struct({
 
 
 
-export default function SignUpLogin(){
+export default function SignUpLogin(props){
 return (
     <View>
 
-    <AuthModal type='Sign Up' handleSubmit={(email, password)=> FirebaseWrapper.getInstance().createUserEmailPassword(email, password)}/>
+    <AuthModal type='Sign Up' handleSubmit={async (email, password)=> {
+      await FirebaseWrapper.getInstance().createUserEmailPassword(email, password)
+      const auth = FirebaseWrapper.getInstance().auth()
+      props.navigation.navigate(auth.currentUser ? Main : Auth)}
+    }/>
     <AuthModal type='Log in' handleSubmit={(email, password)=> FirebaseWrapper.getInstance().signInEmailPassword(email, password)}/>
 
     </View>
@@ -34,6 +38,7 @@ class AuthModal extends Component{
     super(props)
     this.state = {
       modalVisible: false,
+
     }
   }
 
@@ -42,7 +47,6 @@ class AuthModal extends Component{
   }
 
   handleSubmit(props){
-    console.log('ARE THESE MY PROPS', props)
     this.props.handleSubmit(props.email, props.password)
   }
 
