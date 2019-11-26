@@ -42,19 +42,10 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = ''
 
-const ScannerStack = createStackNavigator(
-  {
-    Scanner: ScannerScreen,
-  },
-  {
-    BookDetailsModal: BookDetails,
-  },
-  {
-    mode: 'modal',
-    headerMode: 'none',
-  },
-  config
-)
+const ScannerStack = createStackNavigator({
+  Scanner: ScannerScreen,
+  BookDetailsScreen: BookDetails,
+})
 
 ScannerStack.navigationOptions = {
   tabBarLabel: 'Scanner',
@@ -65,6 +56,8 @@ ScannerStack.navigationOptions = {
     />
   ),
 }
+
+ScannerStack.path = ''
 
 const SignUpLoginStack = createStackNavigator(
   {
