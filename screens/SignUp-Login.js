@@ -11,8 +11,16 @@ const Form = t.form.Form;
 const User = t.struct({
   email: t.String,
   password: t.String,
-
 });
+
+var options = {
+  fields: {
+    password: {
+      password: true,
+      secureTextEntry: true
+    }
+  }
+};
 
 
 
@@ -57,7 +65,8 @@ class AuthModal extends Component{
           {/* <Text> [x] </Text> */}
           <Form
           ref = { c => this._form = c}
-          type={ User }/>
+          type={ User }
+          options={ options }/>
           <Button
           title={this.props.type}
           onPress={()=> this.handleSubmit(this._form.getValue())} />
