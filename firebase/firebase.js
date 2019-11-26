@@ -48,7 +48,7 @@ export default class FirebaseWrapper {
 
   }
 
-  async auth() {
+  async wrapperAuth() {
     try {
       const auth = await this._firebaseInstance.auth()
       return auth

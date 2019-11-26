@@ -30,7 +30,7 @@ return (
 
     <AuthModal type='Sign Up' handleSubmit={async (email, password)=> {
       await FirebaseWrapper.getInstance().createUserEmailPassword(email, password)
-      const auth = FirebaseWrapper.getInstance().auth()
+      const auth = FirebaseWrapper.getInstance().wrapperAuth()
       props.navigation.navigate(auth.currentUser ? 'Main' : 'Auth')}
     }/>
     <AuthModal type='Log in' handleSubmit={(email, password)=> FirebaseWrapper.getInstance().signInEmailPassword(email, password)}/>
