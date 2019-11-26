@@ -14,7 +14,7 @@ export default class AuthLoadingScreen extends Component {
   async componentDidMount() {
     const auth = await FirebaseWrapper.getInstance().auth()
     console.log(auth)
-    this.props.navigation.navigate(auth.currentUser ? 'App' : 'Auth');
+    this.props.navigation.navigate(auth.currentUser ? 'Main' : 'Auth');
 
   }
 

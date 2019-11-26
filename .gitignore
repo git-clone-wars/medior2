@@ -11,4 +11,5 @@ web-build/
 web-report/
 firebase/firebaseConfig.js
 secrets.js
-
+node_modules
+functions/node_modules/*

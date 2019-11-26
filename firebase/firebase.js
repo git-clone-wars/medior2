@@ -48,9 +48,9 @@ export default class FirebaseWrapper {
 
   }
 
-  async myId() {
+  async auth() {
     try {
-      const auth = await this._firebaseInstance.auth().currentUser
+      const auth = await this._firebaseInstance.auth()
       return auth
     } catch(error) {
       console.error(error)

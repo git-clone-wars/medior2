@@ -11,8 +11,16 @@ const Form = t.form.Form;
 const User = t.struct({
   email: t.String,
   password: t.String,
-
 });
+
+var options = {
+  fields: {
+    password: {
+      password: true,
+      secureTextEntry: true
+    }
+  }
+};
 
 
 
@@ -23,7 +31,7 @@ return (
     <AuthModal type='Sign Up' handleSubmit={async (email, password)=> {
       await FirebaseWrapper.getInstance().createUserEmailPassword(email, password)
       const auth = FirebaseWrapper.getInstance().auth()
-      props.navigation.navigate(auth.currentUser ? Main : Auth)}
+      props.navigation.navigate(auth.currentUser ? 'Main' : 'Auth')}
     }/>
     <AuthModal type='Log in' handleSubmit={(email, password)=> FirebaseWrapper.getInstance().signInEmailPassword(email, password)}/>
 
@@ -61,7 +69,8 @@ class AuthModal extends Component{
           {/* <Text> [x] </Text> */}
           <Form
           ref = { c => this._form = c}
-          type={ User }/>
+          type={ User }
+          options={ options }/>
           <Button
           title={this.props.type}
           onPress={()=> this.handleSubmit(this._form.getValue())} />
