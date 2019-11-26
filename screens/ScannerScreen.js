@@ -61,14 +61,12 @@ export default class Scanner extends React.Component {
     try {
       const foundBook = await isbnScanSearch(data)
       const bookInfo = foundBook.items[0].volumeInfo
-      console.log(bookInfo)
       // alert(
       //   `Search returned the book ${foundBook.items[0].volumeInfo.title} by ${foundBook.items[0].volumeInfo.authors[0]}`
       // )
       if (bookInfo) {
-        console.log(this.props)
-        this.props.navigation.navigate('BookDetailsScreen')
-      } //where it navigates to new screen
+        this.props.navigation.navigate('BookDetailsScreen', { book: bookInfo })
+      }
     } catch (error) {
       console.log(`sorry not found ${error}`)
     }
