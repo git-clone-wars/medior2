@@ -6,13 +6,16 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation'
 //components
-import SignUpLogin from '../screens/SignUp-Login'
+
 import TabBarIcon from '../components/TabBarIcon'
 
 //screens
 import HomeScreen from '../screens/HomeScreen'
 import ScannerScreen from '../screens/ScannerScreen'
 import BookDetails from '../screens/BookDetailsScreen'
+import SearchScreen from '../screens/SearchScreen'
+
+
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -59,29 +62,28 @@ ScannerStack.navigationOptions = {
 
 ScannerStack.path = ''
 
-const SignUpLoginStack = createStackNavigator(
+const SearchStack = createStackNavigator(
   {
-    Login: SignUpLogin,
+    Search: SearchScreen,
   },
   config
 )
 
-SignUpLoginStack.navigationOptions = {
-  tabBarLabel: 'Log in',
+SearchStack.navigationOptions = {
+  tabBarLabel: 'Search',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      name={Platform.OS === 'ios' ? 'ios-search' : 'md-search'}
     />
   ),
 }
 
-SignUpLoginStack.path = ''
+SearchStack.path = ''
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  //LinksStack,
-  SignUpLoginStack,
+  SearchStack,
   ScannerStack,
 })
 
