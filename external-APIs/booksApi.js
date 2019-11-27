@@ -1,4 +1,4 @@
-import booksAPIKey from '../secrets'
+import { booksAPIKey } from '../secrets'
 import axios from 'axios'
 
 const isbnScanSearch = async isbnNum => {
