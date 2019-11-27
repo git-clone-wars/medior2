@@ -3,7 +3,8 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import SignUpLogin from '../screens/SignUp-Login'
 import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 
-import MainTabNavigator from './MainTabNavigator';
+
+import MainTabNavigator from './MainTabNavigator'
 
 export default createAppContainer(
   createSwitchNavigator({
@@ -16,4 +17,4 @@ export default createAppContainer(
   {
     initialRouteName: 'AuthLoading'
   })
-);
+)

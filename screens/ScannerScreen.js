@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as React from 'react'
 import { Text, View, StyleSheet, Button } from 'react-native'
 import * as Permissions from 'expo-permissions'
@@ -5,6 +6,10 @@ import { BarCodeScanner } from 'expo-barcode-scanner'
 import isbnScanSearch from '../external-APIs/booksApi'
 
 export default class Scanner extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    const params = navigation.state.params || {}
+  }
+
   state = {
     hasCameraPermission: null,
     scanned: false,
@@ -36,7 +41,7 @@ export default class Scanner extends React.Component {
           justifyContent: 'flex-end',
         }}
       >
-        <BarCodeScanner
+        <BarCodeScanner //button to scan?
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
         />
@@ -55,10 +60,13 @@ export default class Scanner extends React.Component {
     this.setState({ scanned: true })
     try {
       const foundBook = await isbnScanSearch(data)
-      console.log(foundBook.items[0].volumeInfo)
-      alert(
-        `Search returned the book ${foundBook.items[0].volumeInfo.title} by ${foundBook.items[0].volumeInfo.authors[0]}`
-      )
+      const bookInfo = foundBook.items[0].volumeInfo
+      // alert(
+      //   `Search returned the book ${foundBook.items[0].volumeInfo.title} by ${foundBook.items[0].volumeInfo.authors[0]}`
+      // )
+      if (bookInfo) {
+        this.props.navigation.navigate('BookDetailsScreen', { book: bookInfo })
+      }
     } catch (error) {
       console.log(`sorry not found ${error}`)
     }
