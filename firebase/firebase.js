@@ -37,7 +37,6 @@ export default class FirebaseWrapper {
       var errorMessage = error.message
       console.log('Trouble signing in ?', errorCode, errorMessage)
     }
-
   }
 
   signOut() {
@@ -49,9 +48,19 @@ export default class FirebaseWrapper {
 
   }
 
-  createUserEmailPassword(email, password) {
+  async wrapperAuth() {
     try {
-        this._firebaseInstance.auth().createUserWithEmailAndPassword(email, password)
+      const auth = await this._firebaseInstance.auth()
+      return auth
+    } catch(error) {
+      console.error(error)
+      return null
+    }
+  }
+
+  async createUserEmailPassword(email, password) {
+    try {
+        await this._firebaseInstance.auth().createUserWithEmailAndPassword(email, password)
 
     } catch (error) {
       var errorCode = error.code
