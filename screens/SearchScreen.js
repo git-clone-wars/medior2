@@ -9,21 +9,26 @@ import {
 } from 'react-native'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { SearchBar, List, ListItem } from 'react-native-elements'
+import movieSearch from '../external-APIs/moviesApi'
 
 export default class Search extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      search: '',
-      loading: false,
-      // data: [],
+      query: '',
       movieResults: [],
       bookResults: [],
     }
   }
 
-  updateSearch = search => {
-    this.setState({ search })
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  handleSearch = query => {
+    console.log('SHOW ME THE INPUT', query)
+    console.log('SHOW STATE', this.state)
+    this.setState({ query })
   }
 
   renderSeparator = () => {
@@ -43,7 +48,7 @@ export default class Search extends React.Component {
     return (
       <SearchBar
         placeholder='Search Movies and Books...'
-        onChangeText={this.updateSearch}
+        onChangeText={this.handleSearch}
         searchIcon={smallIcon()}
         autoCorrect={true}
         darkTheme
@@ -52,7 +57,18 @@ export default class Search extends React.Component {
     )
   }
 
-  fetchData = async query => {}
+  fetchData = () => {
+    movieSearch()
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          movieResults: [...responseJson],
+        })
+      })
+      .catch(error => {
+        console.log(error) //to catch the errors if any
+      })
+  }
 
   render() {
     const list = [
