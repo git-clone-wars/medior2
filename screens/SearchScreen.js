@@ -7,7 +7,11 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons'
 import { SearchBar, List, ListItem } from 'react-native-elements'
 import movieSearch from '../external-APIs/moviesApi'
 
@@ -112,6 +116,9 @@ export default class Search extends React.Component {
               title={`${item.name}`}
               subtitle={item.subtitle}
               containerStyle={{ borderBottomWidth: 0 }}
+              badge={{
+                value: plusIcon(),
+              }}
             />
           )}
           keyExtractor={item => item.id.toString()}
@@ -125,4 +132,8 @@ export default class Search extends React.Component {
 
 function smallIcon() {
   return <MaterialCommunityIcons name='meteor' size={32} color='#8bf6f5' />
+}
+
+function plusIcon() {
+  return <MaterialIcons name='library-add' size={10} />
 }
