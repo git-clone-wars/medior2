@@ -6,7 +6,7 @@ export default class FirebaseWrapper {
   constructor() {
     this.initialized = false
     this._firebaseInstance = null // instance of our npm package
-    this._firebaseWrapperInstance = null // instance of our wrapper
+    //this._firebaseWrapperInstance = null // instance of our wrapper
     this._firestore = null
   }
 
@@ -45,29 +45,41 @@ export default class FirebaseWrapper {
     } catch (error) {
       console.log('Trouble signing out ?', error)
     }
-
   }
 
   async wrapperAuth() {
     try {
       const auth = await this._firebaseInstance.auth()
       return auth
-    } catch(error) {
+    } catch (error) {
       console.error(error)
       return null
     }
   }
 
+  async wrapperOnAuthStateChanged(callback) {
+    // console.log(
+    //   this._firebaseInstance
+    //     .auth()
+    //     .onAuthStateChanged(user => console.log(user))
+    // )
+    return await this._firebaseInstance.auth().onAuthStateChanged(callback)
+  }
+
+  async wrapperCurrentUser() {
+    return await this._firebaseInstance.auth().currentUser
+  }
+
   async createUserEmailPassword(email, password) {
     try {
-        await this._firebaseInstance.auth().createUserWithEmailAndPassword(email, password)
-
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      await this._firebaseInstance
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
     } catch (error) {
       var errorCode = error.code
       var errorMessage = error.message
       console.log('Trouble signing up ?', errorCode, errorMessage)
     }
   }
-
-
 }
