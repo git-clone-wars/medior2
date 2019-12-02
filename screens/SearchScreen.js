@@ -34,6 +34,7 @@ export default class Search extends React.Component {
     console.log('SHOW ME THE INPUT', query)
     console.log('SHOW STATE', this.state)
     this.setState({ query })
+    // initialize/reset set timeout (callback, will call fetchdata)
   }
 
   renderSeparator = () => {
@@ -76,6 +77,8 @@ export default class Search extends React.Component {
         console.log(error) //to catch the errors if any
       })
   }
+  // consider async await
+  // OR promise.all
 
   render() {
     const list = [
