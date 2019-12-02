@@ -14,6 +14,7 @@ import {
 } from '@expo/vector-icons'
 import { SearchBar, List, ListItem } from 'react-native-elements'
 import movieSearch from '../external-APIs/moviesApi'
+import _ from 'lodash'
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -58,6 +59,7 @@ export default class Search extends React.Component {
         value={this.state.query}
         darkTheme
         round
+        handleSearch={console.log('searchinggg')}
       />
     )
   }
@@ -137,4 +139,8 @@ function smallIcon() {
 
 function plusIcon() {
   return <MaterialIcons name='library-add' size={10} />
+}
+
+function onIconPress() {
+  console.log('bananas')
 }
