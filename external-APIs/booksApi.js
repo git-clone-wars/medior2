@@ -1,7 +1,7 @@
 import { booksAPIKey } from '../secrets'
 import axios from 'axios'
 
-const isbnScanSearch = async isbnNum => {
+export const isbnScanSearch = async isbnNum => {
   try {
     const { data } = await axios.get(
       `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbnNum}&key=${booksAPIKey}`
@@ -12,4 +12,16 @@ const isbnScanSearch = async isbnNum => {
   }
 }
 
-export default isbnScanSearch
+export const bookSearch = async query => {
+  console.log('Lets look at books', query)
+  try {
+    if (query.length > 0) {
+      const { data } = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${booksAPIKey}`
+      )
+      return data
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}

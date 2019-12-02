@@ -14,6 +14,7 @@ import {
 } from '@expo/vector-icons'
 import { SearchBar, List, ListItem } from 'react-native-elements'
 import movieSearch from '../external-APIs/moviesApi'
+import { bookSearch } from '../external-APIs/booksApi'
 import _ from 'lodash'
 
 export default class Search extends React.Component {
@@ -26,14 +27,12 @@ export default class Search extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.fetchData()
-  }
+  // componentDidMount() {
+  //   this.fetchData()
+  // }
 
   handleSearch = query => {
-    console.log('SHOW ME THE INPUT', query)
-    console.log('SHOW STATE', this.state)
-    this.setState({ query })
+    this.setState({ query }, () => this.fetchData())
     // initialize/reset set timeout (callback, will call fetchdata)
   }
 
@@ -60,25 +59,32 @@ export default class Search extends React.Component {
         value={this.state.query}
         darkTheme
         round
-        handleSearch={console.log('searchinggg')}
       />
     )
   }
 
-  fetchData = () => {
-    movieSearch()
-      .then(response => response.json())
+  fetchData = _.debounce(() => {
+    movieSearch(this.state.query)
       .then(responseJson => {
+        // console.log(responseJson.results)
         this.setState({
-          movieResults: [...responseJson],
+          movieResults: [...responseJson.results],
         })
       })
       .catch(error => {
         console.log(error) //to catch the errors if any
       })
-  }
-  // consider async await
-  // OR promise.all
+    bookSearch(this.state.query)
+      .then(responseJson => {
+        console.log('THE LENGTH OF THE RESULT ITEMS', responseJson.items.length)
+        this.setState({
+          bookResults: [...responseJson.items],
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }, 1000)
 
   render() {
     const list = [
@@ -115,7 +121,6 @@ export default class Search extends React.Component {
     return (
       <SafeAreaView>
         <FlatList
-          // i want data to be the search results
           data={list}
           renderItem={({ item }) => (
             <ListItem
@@ -136,17 +141,13 @@ export default class Search extends React.Component {
   }
 }
 
-// function smallIcon() {
-//   return <MaterialCommunityIcons name='meteor' size={32} color='#8bf6f5' />
-// }
-
 function plusIcon() {
   return <MaterialIcons name='library-add' size={10} />
 }
 
-function onIconPress() {
-  console.log('bananas')
-}
+// function onIconPress() {
+//   console.log('bananas')
+// }
 
 function smallIcon() {
   return <MaterialCommunityIcons name='meteor' size={32} color='#a33f34' />
