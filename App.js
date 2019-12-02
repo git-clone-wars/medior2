@@ -1,33 +1,72 @@
 import { AppLoading } from 'expo'
 import { Asset } from 'expo-asset'
 import * as Font from 'expo-font'
-import React, { useState } from 'react'
-import { Platform, StatusBar, StyleSheet, View } from 'react-native'
+import React, { useState, Component } from 'react'
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import FirebaseWrapper from './firebase/firebase'
 import { firebaseConfig } from './firebase/firebaseConfig'
 
 import AppNavigator from './navigation/AppNavigator'
+import AuthNavigator from './navigation/AuthNavigator'
 
-export default function App(props) {
-  FirebaseWrapper.getInstance().initialize(firebaseConfig)
-  const [isLoadingComplete, setLoadingComplete] = useState(false)
+export default class App extends Component {
+  constructor() {
+    super()
+    this.unsubscriber = null
+    this.state = {
+      user: null,
+      loading: true,
+      authenticated: false,
+    }
+  }
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
-      />
+  async componentDidMount() {
+    await FirebaseWrapper.getInstance().initialize(firebaseConfig)
+    await loadResourcesAsync()
+    this.unsubscriber = await FirebaseWrapper.getInstance().wrapperOnAuthStateChanged(
+      user => {
+        if (user) {
+          this.setState({ user: user, authenticated: true, loading: false })
+        } else {
+          this.setState({
+            authenticated: false,
+            loading: false,
+          })
+        }
+      }
     )
-  } else {
-    return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-        <AppNavigator />
-      </View>
-    )
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscriber) {
+      this.unsubscriber()
+    }
+  }
+  render() {
+    console.log('logged in', this.state.user)
+    if (this.state.loading) {
+      return (
+        <View>
+          <Text>Loading.......................</Text>
+        </View>
+      )
+    }
+    if (this.state.user) {
+      return (
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
+          <AppNavigator />
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
+          <AuthNavigator />
+        </View>
+      )
+    }
   }
 }
 
@@ -51,10 +90,6 @@ function handleLoadingError(error) {
   // In this case, you might want to report the error to your error reporting
   // service, for example Sentry
   console.warn(error)
-}
-
-function handleFinishLoading(setLoadingComplete) {
-  setLoadingComplete(true)
 }
 
 const styles = StyleSheet.create({

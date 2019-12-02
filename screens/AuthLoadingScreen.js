@@ -11,8 +11,8 @@ import FirebaseWrapper from '../firebase/firebase'
 
 export default class AuthLoadingScreen extends Component {
   componentDidMount() {
-    console.log('here')
     FirebaseWrapper.getInstance().wrapperOnAuthStateChanged(user => {
+      console.log('here!')
       this.props.navigation.navigate(user ? 'Main' : 'Auth')
     })
   }

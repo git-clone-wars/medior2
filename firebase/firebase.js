@@ -6,7 +6,7 @@ export default class FirebaseWrapper {
   constructor() {
     this.initialized = false
     this._firebaseInstance = null // instance of our npm package
-    this._firebaseWrapperInstance = null // instance of our wrapper
+    //this._firebaseWrapperInstance = null // instance of our wrapper
     this._firestore = null
   }
 
@@ -58,11 +58,21 @@ export default class FirebaseWrapper {
   }
 
   async wrapperOnAuthStateChanged(callback) {
+    // console.log(
+    //   this._firebaseInstance
+    //     .auth()
+    //     .onAuthStateChanged(user => console.log(user))
+    // )
     return await this._firebaseInstance.auth().onAuthStateChanged(callback)
+  }
+
+  async wrapperCurrentUser() {
+    return await this._firebaseInstance.auth().currentUser
   }
 
   async createUserEmailPassword(email, password) {
     try {
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       await this._firebaseInstance
         .auth()
         .createUserWithEmailAndPassword(email, password)

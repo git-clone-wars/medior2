@@ -11,11 +11,12 @@ export default createAppContainer(
       // You could add another route here for authentication.
       // Read more at https://reactnavigation.org/docs/en/auth-flow.html
       // AuthLoading: AuthLoadingScreen,
+      // Main: MainTabNavigator,
+      Auth: SignUpLogin,
       Main: MainTabNavigator,
-      // Auth: SignUpLogin
     },
     {
-      initialRouteName: 'Main',
+      initialRouteName: 'Auth',
     }
   )
 )
