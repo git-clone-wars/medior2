@@ -136,9 +136,9 @@ export default class Search extends React.Component {
   }
 }
 
-function smallIcon() {
-  return <MaterialCommunityIcons name='meteor' size={32} color='#8bf6f5' />
-}
+// function smallIcon() {
+//   return <MaterialCommunityIcons name='meteor' size={32} color='#8bf6f5' />
+// }
 
 function plusIcon() {
   return <MaterialIcons name='library-add' size={10} />
@@ -146,4 +146,8 @@ function plusIcon() {
 
 function onIconPress() {
   console.log('bananas')
+}
+
+function smallIcon() {
+  return <MaterialCommunityIcons name='meteor' size={32} color='#a33f34' />
 }
