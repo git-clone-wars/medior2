@@ -1,12 +1,10 @@
-import { AppLoading } from 'expo'
 import { Asset } from 'expo-asset'
 import * as Font from 'expo-font'
-import React, { useState, Component } from 'react'
+import React, { Component } from 'react'
 import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import FirebaseWrapper from './firebase/firebase'
 import { firebaseConfig } from './firebase/firebaseConfig'
-
 import AppNavigator from './navigation/AppNavigator'
 import AuthNavigator from './navigation/AuthNavigator'
 
@@ -16,8 +14,6 @@ export default class App extends Component {
     this.unsubscriber = null
     this.state = {
       user: null,
-      loading: true,
-      authenticated: false,
     }
   }
 
@@ -27,12 +23,7 @@ export default class App extends Component {
     this.unsubscriber = await FirebaseWrapper.getInstance().wrapperOnAuthStateChanged(
       user => {
         if (user) {
-          this.setState({ user: user, authenticated: true, loading: false })
-        } else {
-          this.setState({
-            authenticated: false,
-            loading: false,
-          })
+          this.setState({ user: user })
         }
       }
     )
@@ -44,14 +35,7 @@ export default class App extends Component {
     }
   }
   render() {
-    console.log('logged in', this.state.user)
-    if (this.state.loading) {
-      return (
-        <View>
-          <Text>Loading.......................</Text>
-        </View>
-      )
-    }
+    console.log('logged in:', !!this.state.user)
     if (this.state.user) {
       return (
         <View style={styles.container}>
@@ -84,12 +68,6 @@ async function loadResourcesAsync() {
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
     }),
   ])
-}
-
-function handleLoadingError(error) {
-  // In this case, you might want to report the error to your error reporting
-  // service, for example Sentry
-  console.warn(error)
 }
 
 const styles = StyleSheet.create({
