@@ -55,6 +55,7 @@ export default class Search extends React.Component {
         onChangeText={this.handleSearch}
         searchIcon={smallIcon()}
         autoCorrect={true}
+        value={this.state.query}
         darkTheme
         round
       />
