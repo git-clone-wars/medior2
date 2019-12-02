@@ -12,3 +12,5 @@ const movieSearch = async query => {
     console.log(error)
   }
 }
+
+export default movieSearch
