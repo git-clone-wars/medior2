@@ -23,13 +23,12 @@ export default class App extends Component {
     this.unsubscriber = await FirebaseWrapper.getInstance().wrapperOnAuthStateChanged(
       user => {
         if (user) {
-          console.log('in subscribe')
           this.setState({ user: user })
         }
       }
     )
   }
-
+  s
   componentWillUnmount() {
     if (this.unsubscriber) {
       this.unsubscriber()

@@ -66,10 +66,6 @@ export default class FirebaseWrapper {
     return await this._firebaseInstance.auth().onAuthStateChanged(callback)
   }
 
-  async wrapperCurrentUser() {
-    return await this._firebaseInstance.auth().currentUser
-  }
-
   async createUserEmailPassword(email, password) {
     try {
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -83,8 +79,31 @@ export default class FirebaseWrapper {
     }
   }
 
-  async addMedia(type, item, list) {
+  async addMedia(mediaType, listType, item) {
     try {
+      if (!mediaTypes.includes(mediaType)) {
+        throw 'Not a valid media type!'
+      }
+      if (!listTypes.includes(listType)) {
+        throw 'Not a valid list type!'
+      }
+      const uid = this._firebaseInstance.auth().currentUser.uid
+      if (mediaType === 'book') {
+        const ref = item.isbn
+        this._firestore
+          .doc(`/books/${ref}`)
+          .get()
+          .then(docSnapshot => {
+            if (!docSnapshot.exists) {
+              this._firestore.collection(`books/${ref}`).set
+            }
+          })
+
+        this._firebaseInstance.firestore
+        this._firebaseInstance.firestore.ref(
+          `usersBookLists/${uid}/${listType}`
+        )
+      }
     } catch (error) {
       console.error('problem adding media:', error)
     }
@@ -92,3 +111,6 @@ export default class FirebaseWrapper {
 }
 
 const mediaTypes = ['book', 'movie', 'tvShow']
+const listTypes = ['current', 'completed', 'planTo', 'onHold', 'dropped']
+
+//FirebaseWrapper.getInstance().addMedia('book', 'completed', { isbn: 123 })
