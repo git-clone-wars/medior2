@@ -82,9 +82,9 @@ export default class Search extends React.Component {
         volumeInfo: {
           imageLinks: {
             thumbnail:
-              'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+              'http://books.google.com/books/content?id=Oufokin__d4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
           },
-          publishedDate: 1999,
+          publishedDate: '1999-04-28',
           authors: ['Neil Gaiman'],
           title: 'American Gods',
         },
@@ -94,10 +94,10 @@ export default class Search extends React.Component {
         volumeInfo: {
           imageLinks: {
             thumbnail:
-              'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+              'http://books.google.com/books/content?id=Oufokin__d4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
           },
-          publishedDate: 1847,
-          authors: ['Charlotte Bronte'],
+          publishedDate: '1847-06-05',
+          authors: ['Charlotte Bronte', 'Doug Bronte'],
           title: 'Jane Eyre',
         },
         id: 9,
@@ -120,7 +120,7 @@ export default class Search extends React.Component {
     ]
 
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <SearchBar
           placeholder='Search Movies and Books...'
           onChangeText={this.handleSearch}
@@ -130,10 +130,7 @@ export default class Search extends React.Component {
           darkTheme
           round
         />
-        <SearchTabs
-          movies={this.state.movieResults}
-          books={this.state.bookResults}
-        />
+        <SearchTabs movies={movieList} books={bookList} />
       </SafeAreaView>
     )
   }
