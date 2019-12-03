@@ -82,4 +82,13 @@ export default class FirebaseWrapper {
       console.log('Trouble signing up ?', errorCode, errorMessage)
     }
   }
+
+  async addMedia(type, item, list) {
+    try {
+    } catch (error) {
+      console.error('problem adding media:', error)
+    }
+  }
 }
+
+const mediaTypes = ['book', 'movie', 'tvShow']
