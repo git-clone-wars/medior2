@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions, SafeAreaView
 } from 'react-native'
 
 import { TabView, SceneMap } from 'react-native-tab-view'
@@ -56,7 +56,6 @@ export default class HomeScreen extends React.Component {
         onIndexChange={index => this.setState({ index })}
         initialLayout={{ width: Dimensions.get('window').width }}
       />
-
     )
   }
 }

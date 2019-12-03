@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import { Tile } from 'react-native-elements'
+import { StyleSheet, View, Text, SafeAreaView } from 'react-native'
+import { ListItem, List } from 'react-native-elements'
+import { FlatList } from 'react-native-gesture-handler'
 
 const bookList = [
   {
@@ -47,13 +48,28 @@ const movieList = [
 
 const CurrentlyWatching = () => (
   <View style={[styles.scene, { backgroundColor: '#212730' }]}>
-    <Text>Movies</Text>
-    {movieList.map((movie) => {
-      return (
-        <Tile key={movie.id} image={`http://image.tmdb.org/t/p/original/${movie.poster_path}`} />
-      )
-    })}
+    <FlatList
+      data={movieList}
+      horizontal={true}
+      containerStyle={{ borderBottomWidth: 0 }}
+      renderItem={({ item }) => (
+        <ListItem
+          leftAvatar={{
+            rounded: false,
+            size: 'large',
+            source: {
+              uri: `http://image.tmdb.org/t/p/original${item.poster_path}`,
+            },
+          }}
+          button
+          onPress={() => console.log('button pressed!')}
+        />
+      )}
+      keyExtractor={item => item.id.toString()}
+      ItemSeparatorComponent={this.renderSeparator}
+    />
   </View>
+
 )
 
 const styles = StyleSheet.create({
