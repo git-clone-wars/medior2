@@ -99,9 +99,7 @@ const BookResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-            title={`${
-              item.volumeInfo.title
-            } (${item.volumeInfo.publishedDate.slice(0, 4)})`}
+            title={`${item.volumeInfo.title} (${item.volumeInfo.publishedDate})`}
             subtitle={`${item.volumeInfo.authors}`}
             leftAvatar={{
               rounded: false,
