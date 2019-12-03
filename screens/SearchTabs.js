@@ -69,7 +69,7 @@ const MovieResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-            title={`${item.title} (${item.release_date})`}
+            title={`${item.title} (${item.release_date.slice(0, 4)})`}
             leftAvatar={{
               rounded: false,
               size: 'large',
@@ -77,6 +77,8 @@ const MovieResults = props => {
                 uri: `http://image.tmdb.org/t/p/original${item.poster_path}`,
               },
             }}
+            button
+            onPress={() => console.log('button pressed!')}
           />
         )}
         keyExtractor={item => item.id.toString()}
