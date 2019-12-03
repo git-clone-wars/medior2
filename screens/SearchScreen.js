@@ -54,7 +54,7 @@ export default class Search extends React.Component {
   fetchData = _.debounce(() => {
     movieSearch(this.state.query)
       .then(responseJson => {
-        // console.log(responseJson.results)
+        console.log(responseJson.results.length, 'movies returned')
         this.setState({
           movieResults: [...responseJson.results],
         })
@@ -64,7 +64,7 @@ export default class Search extends React.Component {
       })
     bookSearch(this.state.query)
       .then(responseJson => {
-        console.log('THE LENGTH OF THE RESULT ITEMS', responseJson.items.length)
+        console.log(responseJson.items.length, 'books returned')
         this.setState({
           bookResults: [...responseJson.items],
         })

@@ -2,7 +2,6 @@ import { movie_api } from '../secrets'
 import axios from 'axios'
 
 const movieSearch = async query => {
-  console.log('API HAS BEEN CALLED', query)
   try {
     if (query.length > 0) {
       const { data } = await axios.get(

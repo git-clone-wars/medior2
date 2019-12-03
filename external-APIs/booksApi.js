@@ -13,7 +13,6 @@ export const isbnScanSearch = async isbnNum => {
 }
 
 export const bookSearch = async query => {
-  console.log('Lets look at books', query)
   try {
     if (query.length > 0) {
       const { data } = await axios.get(
