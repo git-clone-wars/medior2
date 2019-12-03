@@ -59,11 +59,14 @@ export default class Scanner extends React.Component {
   handleBarCodeScanned = async ({ type, data }) => {
     this.setState({ scanned: true })
     try {
+      alert(`got data: `, data)
       const foundBook = await isbnScanSearch(data)
       const bookInfo = foundBook.items[0].volumeInfo
-      // alert(
-      //   `Search returned the book ${foundBook.items[0].volumeInfo.title} by ${foundBook.items[0].volumeInfo.authors[0]}`
-      // )
+
+      console.log(`got data: `, data)
+      alert(
+        `Search returned the book ${foundBook.items[0].volumeInfo.title} by ${foundBook.items[0].volumeInfo.authors[0]}`
+      )
       if (bookInfo) {
         this.props.navigation.navigate('BookDetailsScreen', { book: bookInfo })
       }
