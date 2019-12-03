@@ -2,10 +2,11 @@ import * as React from 'react'
 import {
   Text,
   View,
-  StyleSheet,
   Button,
   SectionList,
   SafeAreaView,
+  StyleSheet,
+  Dimensions,
   FlatList,
 } from 'react-native'
 import {
@@ -18,15 +19,15 @@ import movieSearch from '../external-APIs/moviesApi'
 import { bookSearch } from '../external-APIs/booksApi'
 import _ from 'lodash'
 
-import { makeStyles } from '@material-ui/core/styles'
-import {
-  Typography,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-} from '@material-ui/core'
-// import Typography from '@material-ui/core/Typography';
+import { TabView, SceneMap } from 'react-native-tab-view'
+
+const FirstRoute = () => (
+  <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
+)
+
+const SecondRoute = () => (
+  <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
+)
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -35,6 +36,11 @@ export default class Search extends React.Component {
       query: '',
       movieResults: [],
       bookResults: [],
+      index: 0,
+      routes: [
+        { key: 'movies', title: 'Movie Results' },
+        { key: 'books', title: 'Book Results' },
+      ],
     }
   }
 
@@ -52,20 +58,6 @@ export default class Search extends React.Component {
           backgroundColor: '#CED0CE',
           marginLeft: '0%',
         }}
-      />
-    )
-  }
-
-  renderHeader = () => {
-    return (
-      <SearchBar
-        placeholder='Search Movies and Books...'
-        onChangeText={this.handleSearch}
-        searchIcon={smallIcon()}
-        autoCorrect={true}
-        value={this.state.query}
-        darkTheme
-        round
       />
     )
   }
@@ -94,7 +86,7 @@ export default class Search extends React.Component {
   }, 1000)
 
   render() {
-    const allData = [...this.state.movieResults, this.state.bookResults]
+    // const allData = [...this.state.movieResults, this.state.bookResults]
 
     const bookList = [
       {
@@ -123,7 +115,7 @@ export default class Search extends React.Component {
       },
     ]
 
-    const MovieList = [
+    const movieList = [
       {
         title: 'Interstellar',
         poster_path: '/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg',
@@ -138,30 +130,25 @@ export default class Search extends React.Component {
       },
     ]
 
-    const classes = useStyles()
     return (
       <SafeAreaView>
-        <SectionList
-          sections={[
-            {
-              category: 'Movies',
-              data: [movieList],
-              renderItem: ({ item, index, section: { category, data } }) => (
-                <Text>{item.name}</Text>
-              ),
-            },
-            {
-              category: 'Books',
-              data: [bookList],
-              renderItem: ({ item, index, section: { category, data } }) => (
-                <Text>{item.name}</Text>
-              ),
-            },
-          ]}
-          // renderItem={({ item,  }) => ( )}
-          keyExtractor={item => item.id.toString()}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
+        <SearchBar
+          placeholder='Search Movies and Books...'
+          onChangeText={this.handleSearch}
+          searchIcon={smallIcon()}
+          autoCorrect={true}
+          value={this.state.query}
+          darkTheme
+          round
+        />
+        <TabView
+          navigationState={this.state}
+          renderScene={SceneMap({
+            movies: FirstRoute,
+            books: SecondRoute,
+          })}
+          onIndexChange={index => this.setState({ index })}
+          initialLayout={{ width: Dimensions.get('window').width }}
         />
       </SafeAreaView>
     )
@@ -172,59 +159,8 @@ function smallIcon() {
   return <MaterialCommunityIcons name='meteor' size={32} color='#a33f34' />
 }
 
-function movieCard(item) {
-  return (
-    <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          classname={classes.media}
-          image={`http://image.tmdb.org/t/p/original/${item.poster_path}`}
-          title='movie poster'
-        />
-        <CardContent>
-          <Typography gutterBottom variant='h5' component='h2'>
-            {`${item.title}(${item.release_date.slice(4)})`}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size='small' color='primary'>
-          ADD
-        </Button>
-      </CardActions>
-    </Card>
-  )
-}
-
-function bookCard(item) {
-  return (
-    <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          classname={classes.media}
-          image={item.volumeInfo.imageLinks.thumbnail}
-          title='book poster'
-        />
-        <CardContent>
-          <Typography gutterBottom variant='h5' component='h2'>
-            {`${item.volumeInfo.title}(${item.volumeInfo.publishedDate})`}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size='small' color='primary'>
-          ADD
-        </Button>
-      </CardActions>
-    </Card>
-  )
-}
-
-const useStyles = makeStyles({
-  card: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
+const styles = StyleSheet.create({
+  scene: {
+    flex: 1,
   },
 })
