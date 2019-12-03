@@ -21,13 +21,7 @@ import _ from 'lodash'
 
 import { TabView, SceneMap } from 'react-native-tab-view'
 
-const FirstRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
-)
-
-const SecondRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
-)
+import SearchTabs from './SearchTabs'
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -36,11 +30,6 @@ export default class Search extends React.Component {
       query: '',
       movieResults: [],
       bookResults: [],
-      index: 0,
-      routes: [
-        { key: 'movies', title: 'Movie Results' },
-        { key: 'books', title: 'Book Results' },
-      ],
     }
   }
 
@@ -141,14 +130,9 @@ export default class Search extends React.Component {
           darkTheme
           round
         />
-        <TabView
-          navigationState={this.state}
-          renderScene={SceneMap({
-            movies: FirstRoute,
-            books: SecondRoute,
-          })}
-          onIndexChange={index => this.setState({ index })}
-          initialLayout={{ width: Dimensions.get('window').width }}
+        <SearchTabs
+          movies={this.state.movieResults}
+          books={this.state.bookResults}
         />
       </SafeAreaView>
     )
@@ -158,9 +142,3 @@ export default class Search extends React.Component {
 function smallIcon() {
   return <MaterialCommunityIcons name='meteor' size={32} color='#a33f34' />
 }
-
-const styles = StyleSheet.create({
-  scene: {
-    flex: 1,
-  },
-})
