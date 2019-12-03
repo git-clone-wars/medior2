@@ -77,47 +77,47 @@ export default class Search extends React.Component {
   render() {
     // const allData = [...this.state.movieResults, this.state.bookResults]
 
-    const bookList = [
-      {
-        volumeInfo: {
-          imageLinks: {
-            thumbnail:
-              'http://books.google.com/books/content?id=Oufokin__d4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-          },
-          publishedDate: '1999-04-28',
-          authors: ['Neil Gaiman'],
-          title: 'American Gods',
-        },
-        id: 6,
-      },
-      {
-        volumeInfo: {
-          imageLinks: {
-            thumbnail:
-              'http://books.google.com/books/content?id=Oufokin__d4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-          },
-          publishedDate: '1847-06-05',
-          authors: ['Charlotte Bronte', 'Doug Bronte'],
-          title: 'Jane Eyre',
-        },
-        id: 9,
-      },
-    ]
+    // const bookList = [
+    //   {
+    //     volumeInfo: {
+    //       imageLinks: {
+    //         thumbnail:
+    //           'http://books.google.com/books/content?id=Oufokin__d4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+    //       },
+    //       publishedDate: '1999-04-28',
+    //       authors: ['Neil Gaiman'],
+    //       title: 'American Gods',
+    //     },
+    //     id: 6,
+    //   },
+    //   {
+    //     volumeInfo: {
+    //       imageLinks: {
+    //         thumbnail:
+    //           'http://books.google.com/books/content?id=Oufokin__d4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+    //       },
+    //       publishedDate: '1847-06-05',
+    //       authors: ['Charlotte Bronte', 'Doug Bronte'],
+    //       title: 'Jane Eyre',
+    //     },
+    //     id: 9,
+    //   },
+    // ]
 
-    const movieList = [
-      {
-        title: 'Interstellar',
-        poster_path: '/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg',
-        release_date: 2014,
-        id: 7,
-      },
-      {
-        title: 'The Lighthouse',
-        poster_path: '/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg',
-        release_date: 2019,
-        id: 12,
-      },
-    ]
+    // const movieList = [
+    //   {
+    //     title: 'Interstellar',
+    //     poster_path: '/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg',
+    //     release_date: 2014,
+    //     id: 7,
+    //   },
+    //   {
+    //     title: 'The Lighthouse',
+    //     poster_path: '/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg',
+    //     release_date: 2019,
+    //     id: 12,
+    //   },
+    // ]
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -130,7 +130,10 @@ export default class Search extends React.Component {
           darkTheme
           round
         />
-        <SearchTabs movies={movieList} books={bookList} />
+        <SearchTabs
+          movies={this.state.movieResults}
+          books={this.state.bookResults}
+        />
       </SafeAreaView>
     )
   }
