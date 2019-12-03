@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   Button,
+  SectionList,
   SafeAreaView,
   FlatList,
 } from 'react-native'
@@ -17,6 +18,16 @@ import movieSearch from '../external-APIs/moviesApi'
 import { bookSearch } from '../external-APIs/booksApi'
 import _ from 'lodash'
 
+import { makeStyles } from '@material-ui/core/styles'
+import {
+  Typography,
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+} from '@material-ui/core'
+// import Typography from '@material-ui/core/Typography';
+
 export default class Search extends React.Component {
   constructor(props) {
     super(props)
@@ -26,10 +37,6 @@ export default class Search extends React.Component {
       bookResults: [],
     }
   }
-
-  // componentDidMount() {
-  //   this.fetchData()
-  // }
 
   handleSearch = query => {
     this.setState({ query }, () => this.fetchData())
@@ -87,51 +94,71 @@ export default class Search extends React.Component {
   }, 1000)
 
   render() {
-    const list = [
+    const allData = [...this.state.movieResults, this.state.bookResults]
+
+    const bookList = [
       {
-        name: 'Amy Farha',
-        avatar_url:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President',
+        volumeInfo: {
+          imageLinks: {
+            thumbnail:
+              'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+          },
+          publishedDate: 1999,
+          authors: ['Neil Gaiman'],
+          title: 'American Gods',
+        },
         id: 6,
       },
       {
-        name: 'Chris Jackson',
-        avatar_url:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman',
-        id: 7,
-      },
-      {
-        name: 'Audrey Capstone',
-        avatar_url:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Queen badass',
-        id: 8,
-      },
-      {
-        name: 'Leslie Godwin',
-        avatar_url:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Professor Goddess',
+        volumeInfo: {
+          imageLinks: {
+            thumbnail:
+              'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+          },
+          publishedDate: 1847,
+          authors: ['Charlotte Bronte'],
+          title: 'Jane Eyre',
+        },
         id: 9,
       },
     ]
 
+    const MovieList = [
+      {
+        title: 'Interstellar',
+        poster_path: '/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg',
+        release_date: 2014,
+        id: 7,
+      },
+      {
+        title: 'The Lighthouse',
+        poster_path: '/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg',
+        release_date: 2019,
+        id: 12,
+      },
+    ]
+
+    const classes = useStyles()
     return (
       <SafeAreaView>
-        <FlatList
-          data={list}
-          renderItem={({ item }) => (
-            <ListItem
-              title={`${item.name}`}
-              subtitle={item.subtitle}
-              containerStyle={{ borderBottomWidth: 0 }}
-              badge={{
-                value: plusIcon(),
-              }}
-            />
-          )}
+        <SectionList
+          sections={[
+            {
+              category: 'Movies',
+              data: [movieList],
+              renderItem: ({ item, index, section: { category, data } }) => (
+                <Text>{item.name}</Text>
+              ),
+            },
+            {
+              category: 'Books',
+              data: [bookList],
+              renderItem: ({ item, index, section: { category, data } }) => (
+                <Text>{item.name}</Text>
+              ),
+            },
+          ]}
+          // renderItem={({ item,  }) => ( )}
           keyExtractor={item => item.id.toString()}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
@@ -141,14 +168,63 @@ export default class Search extends React.Component {
   }
 }
 
-function plusIcon() {
-  return <MaterialIcons name='library-add' size={10} />
-}
-
-// function onIconPress() {
-//   console.log('bananas')
-// }
-
 function smallIcon() {
   return <MaterialCommunityIcons name='meteor' size={32} color='#a33f34' />
 }
+
+function movieCard(item) {
+  return (
+    <Card className={classes.card}>
+      <CardActionArea>
+        <CardMedia
+          classname={classes.media}
+          image={`http://image.tmdb.org/t/p/original/${item.poster_path}`}
+          title='movie poster'
+        />
+        <CardContent>
+          <Typography gutterBottom variant='h5' component='h2'>
+            {`${item.title}(${item.release_date.slice(4)})`}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size='small' color='primary'>
+          ADD
+        </Button>
+      </CardActions>
+    </Card>
+  )
+}
+
+function bookCard(item) {
+  return (
+    <Card className={classes.card}>
+      <CardActionArea>
+        <CardMedia
+          classname={classes.media}
+          image={item.volumeInfo.imageLinks.thumbnail}
+          title='book poster'
+        />
+        <CardContent>
+          <Typography gutterBottom variant='h5' component='h2'>
+            {`${item.volumeInfo.title}(${item.volumeInfo.publishedDate})`}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size='small' color='primary'>
+          ADD
+        </Button>
+      </CardActions>
+    </Card>
+  )
+}
+
+const useStyles = makeStyles({
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+})

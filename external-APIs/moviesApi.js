@@ -17,3 +17,23 @@ const movieSearch = async query => {
 }
 
 export default movieSearch
+
+// movie book formatting
+
+// movie (has id)
+//poster: `http://image.tmdb.org/t/p/original/${movie.poster_path}`
+//title: movie.title
+// released: movie.release_date
+
+//overview: movie.overview
+
+// book (has id)
+// poster: book.volumeInfo.imageLinks.thumbnail
+// title: book.volumeInfo.title
+// author(s): book.volumeInfo.authors (will have to be mapped through )
+//released: book.volumeInfo.publishedDate
+
+//overview: book.volumeInfo.description
+
+// APPROACH?
+// multiple flat lists, map through two different data sets (From state)
