@@ -6,7 +6,7 @@ import {
   Dimensions, SafeAreaView
 } from 'react-native'
 
-import { TabView, SceneMap } from 'react-native-tab-view'
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 
 import CurrentlyWatching from './CurrentlyWatching'
 
@@ -55,6 +55,14 @@ export default class HomeScreen extends React.Component {
         })}
         onIndexChange={index => this.setState({ index })}
         initialLayout={{ width: Dimensions.get('window').width }}
+        renderTabBar={props => <TabBar
+          {...props}
+          style={{ backgroundColor: '#212730' }}
+          activeColor='#8bf6f5'
+          inactiveColor='#393e46'
+          indicatorStyle={{ backgroundColor: '#a33f34' }}
+
+        />}
       />
     )
   }

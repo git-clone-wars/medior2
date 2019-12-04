@@ -8,7 +8,6 @@ import {
 
 //components
 
-import TabBarIcon from '../components/TabBarIcon'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 //screens
