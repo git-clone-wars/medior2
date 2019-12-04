@@ -96,6 +96,7 @@ export default class Search extends React.Component {
           round
         />
         <SearchTabs
+          detailsNav={this.props.navigation}
           movies={this.state.movieResults}
           books={this.state.bookResults}
         />

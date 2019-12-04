@@ -64,6 +64,7 @@ ScannerStack.path = ''
 const SearchStack = createStackNavigator(
   {
     Search: SearchScreen,
+    BookDetailsScreen: BookDetails
   },
   config
 )
