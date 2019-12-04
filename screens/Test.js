@@ -1,23 +1,26 @@
 import React from 'react'
 import { StyleSheet, Button, View } from 'react-native'
 import FirebaseWrapper from '../firebase/firebase'
+import AddToListModal from '../components/AddToList'
 
-export default function Test() {
-  const book = {
-    title: 'Harry Potter',
-    isbn: '12345',
-    author: 'JK Rowling',
-    year: '1995',
-  }
+export default class Test extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      modalVisible: false,
+      mediaType: 'book',
+      item: {title: 'Harry Potter',
+      isbn: '12345',
+      author: 'JK Rowling',
+      year: '1995'}
+    }
+    }
 
-  const sendBookFunc = (book, listType) => {
-    console.log('clicked!')
-    FirebaseWrapper.getInstance()
-  }
 
-  return (
+  render()(
     <View>
-      <Button title='click!' onPress={() => sendBookFunc(book, 'completed')} />
+      <Button title='click!' onPress={() => this.setState({modalVisible: !this.state.modalVisible})} />
+      <AddToListModal visible={this.state.modalVisible} mediaType={this.state.mediaType} item={this.state.item} />
     </View>
   )
 }

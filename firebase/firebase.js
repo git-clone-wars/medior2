@@ -100,9 +100,12 @@ export default class FirebaseWrapper {
           })
 
         this._firebaseInstance.firestore
-        this._firebaseInstance.firestore.ref(
-          `usersBookLists/${uid}/${listType}`
-        )
+        this._firebaseInstance.firestore
+          .ref(`usersBookLists/${uid}/${listType}/${ref}`)
+          .set(item)
+        this._firebaseInstance.firestore
+          .ref(`userLists/${uid}/${listType}/${mediaType}/${ref}`)
+          .set(item)
       }
     } catch (error) {
       console.error('problem adding media:', error)
