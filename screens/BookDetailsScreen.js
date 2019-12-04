@@ -57,12 +57,3 @@ export default class BookDetails extends React.Component {
   }
 }
 
-{
-  /* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#212730' }}>
-<Text style={{ fontSize: 30 }}>Is this the book? {book.title} by {book.authors[0]}</Text>
-<Button
-  onPress={() => this.props.navigation.goBack()}
-  title='Dismiss'
-/>
-</View> */
-}
