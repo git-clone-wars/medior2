@@ -69,6 +69,7 @@ export default class SearchTabs extends React.Component {
 const MovieResults = props => {
   const { movies } = props
   // this is coming in as an array
+
   return (
     <View style={[styles.scene, { backgroundColor: '#212730' }]}>
       <FlatList
@@ -106,7 +107,6 @@ const BookResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-
             title={`${item['title']} (${item['publishedDate']})`}
             subtitle={`${item['authors']}`}
             leftAvatar={{
