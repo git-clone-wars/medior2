@@ -51,9 +51,10 @@ const CurrentlyWatching = () => (
     <FlatList
       data={movieList}
       horizontal={true}
-      containerStyle={{ borderBottomWidth: 0 }}
+      containerStyle={{ borderBottomWidth: 0, backgroundColor: '#104f55' }}
       renderItem={({ item }) => (
         <ListItem
+          subtitle={item.title}
           leftAvatar={{
             rounded: false,
             size: 'large',

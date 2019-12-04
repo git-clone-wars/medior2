@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Text, View, StyleSheet, Button } from 'react-native'
 import * as Permissions from 'expo-permissions'
 import { BarCodeScanner } from 'expo-barcode-scanner'
-import { isbnScanSearch } from '../external-APIs/booksApi'
+import { isbnScanSearch, sanitizeBookData } from '../external-APIs/booksApi'
 
 export default class Scanner extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -59,16 +59,12 @@ export default class Scanner extends React.Component {
   handleBarCodeScanned = async ({ type, data }) => {
     this.setState({ scanned: true })
     try {
-      alert(`got data: `, data)
       const foundBook = await isbnScanSearch(data)
-      const bookInfo = foundBook.items[0].volumeInfo
 
-      console.log(`got data: `, data)
-      alert(
-        `Search returned the book ${foundBook.items[0].volumeInfo.title} by ${foundBook.items[0].volumeInfo.authors[0]}`
-      )
-      if (bookInfo) {
-        this.props.navigation.navigate('BookDetailsScreen', { book: bookInfo })
+      const sanitizedBookInfo = sanitizeBookData(foundBook.items[0])
+
+      if (sanitizedBookInfo) {
+        this.props.navigation.navigate('BookDetailsScreen', { book: sanitizedBookInfo })
       }
     } catch (error) {
       console.log(`sorry not found ${error}`)

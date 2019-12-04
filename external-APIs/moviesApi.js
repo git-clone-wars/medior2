@@ -32,7 +32,6 @@ export const sanitizeMovieData = result => {
     formattedQuery['releaseDate'] = result.release_date
   }
 
-  console.log('MOVIES FORMATTED', formattedQuery)
   return formattedQuery
 }
 

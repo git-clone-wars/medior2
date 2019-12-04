@@ -9,7 +9,7 @@ export default class BookDetails extends React.Component {
     console.log(book)
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ fontSize: 30 }}>Is this the book? {book.title} </Text>
+        <Text style={{ fontSize: 30 }}>Is this the book? {book.title} by {book.author}</Text>
         <Button
           onPress={() => this.props.navigation.goBack()}
           title='Dismiss'
