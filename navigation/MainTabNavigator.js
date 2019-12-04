@@ -35,7 +35,7 @@ HomeStack.navigationOptions = {
     <MaterialCommunityIcons
       focused={focused}
       name='meteor'
-      size={32}
+      size={35}
       color='#a33f34'
     />
   ),
@@ -51,9 +51,11 @@ const ScannerStack = createStackNavigator({
 ScannerStack.navigationOptions = {
   tabBarLabel: 'Scanner',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
+    <MaterialCommunityIcons
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-barcode' : 'md-barcode'}
+      name='barcode-scan'
+      color='#a33f34'
+      size={32}
     />
   ),
 }
@@ -70,9 +72,11 @@ const SearchStack = createStackNavigator(
 SearchStack.navigationOptions = {
   tabBarLabel: 'Search',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
+    <MaterialCommunityIcons
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-search' : 'md-search'}
+      name='magnify'
+      color='#a33f34'
+      size={32}
     />
   ),
 }
@@ -83,7 +87,15 @@ const tabNavigator = createBottomTabNavigator({
   HomeStack,
   SearchStack,
   ScannerStack,
-})
+},
+  {
+    tabBarOptions: {
+      activeTintColor: '#8bf6f5',
+      inactiveTintColor: '#393e46',
+      activeBackgroundColor: '#212730',
+      inactiveBackgroundColor: '#212730'
+    }
+  })
 
 tabNavigator.path = ''
 
