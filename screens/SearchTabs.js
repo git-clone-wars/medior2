@@ -99,20 +99,18 @@ const BookResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-            title={`${
-              item.volumeInfo.title
-            } (${item.volumeInfo.publishedDate.slice(0, 4)})`}
-            subtitle={`${item.volumeInfo.authors}`}
+            title={`${item['title']} (${item['publishedDate']})`}
+            subtitle={`${item['authors']}`}
             leftAvatar={{
               rounded: false,
               size: 'large',
               source: {
-                uri: item.volumeInfo.imageLinks.thumbnail,
+                uri: item['thumbnail'],
               },
             }}
           />
         )}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item['ISBN']}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>

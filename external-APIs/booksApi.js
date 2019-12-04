@@ -24,3 +24,40 @@ export const bookSearch = async query => {
     console.log(error)
   }
 }
+
+export const sanitizeData = item => {
+  const formattedQuery = {}
+  formattedQuery['authors'] = item.volumeInfo.authors
+  // authors is an array
+
+  formattedQuery['title'] = item.volumeInfo.title
+
+  // formattedQuery['publishedDate'] = item.volumeInfo.publishedDate
+  // format "YYY-MM-DD"
+
+  if (item.volumeInfo.publishedDate.length > 5) {
+    formattedQuery['publishedDate'] = item.volumeInfo.publishedDate.slice(0, 4)
+  } else {
+    formattedQuery['publishedDate'] = item.volumeInfo.publishedDate
+  }
+
+  formattedQuery['categories'] = item.volumeInfo.categories
+  // an array
+
+  formattedQuery['longDesc'] = item.volumeInfo.description
+    ? item.volumeInfo.description
+    : ''
+  // longer description
+
+  formattedQuery['ISBN'] = item.volumeInfo.industryIdentifiers[0].identifier
+
+  if (item.volumeInfo.imageLinks.thumbnail) {
+    formattedQuery['thumbnail'] = item.volumeInfo.imageLinks.thumbnail
+  } else if (item.volumeInfo.imageLinks.smallThumbnail) {
+    formattedQuery['thumbnail'] = item.volumeInfo.imageLinks.smallThumbnail
+  } else {
+    formattedQuery['thumbnail'] = 'https://tinyurl.com/tfbxys2'
+  }
+  console.log('BOOKS FORMATTED', formattedQuery)
+  return formattedQuery
+}

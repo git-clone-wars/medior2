@@ -16,7 +16,7 @@ import {
 } from '@expo/vector-icons'
 import { SearchBar, List, ListItem } from 'react-native-elements'
 import movieSearch from '../external-APIs/moviesApi'
-import { bookSearch } from '../external-APIs/booksApi'
+import { bookSearch, sanitizeData } from '../external-APIs/booksApi'
 import _ from 'lodash'
 
 import { TabView, SceneMap } from 'react-native-tab-view'
@@ -64,9 +64,14 @@ export default class Search extends React.Component {
       })
     bookSearch(this.state.query)
       .then(responseJson => {
-        console.log(responseJson.items.length, 'books returned')
+        // console.log(responseJson.items.length, 'books returned')
+
+        const formatted = responseJson.items.map(item => {
+          return sanitizeData(item)
+        })
+
         this.setState({
-          bookResults: [...responseJson.items],
+          bookResults: [...formatted],
         })
       })
       .catch(error => {
