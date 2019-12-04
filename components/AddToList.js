@@ -1,37 +1,97 @@
 import React from 'react'
-import { Text, Button } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
-import ActionButton from 'react-native-action-button'
+//import Modal from 'react-native-modal'
+import { View, StyleSheet, Button, Modal } from 'react-native'
+import FirebaseWrapper from '../firebase/firebase'
 
-export function addButton(props) {
-  const { mediaType, idNumber } = props
+export default class AddToListModal extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      visible: this.props.visible || false,
+      mediaType: this.props.mediaType || '',
+      item: this.props.item || {},
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
 
-  return (
-    <View style={{ flex: 1, backgroundColor: '#f3f3f3' }}>
-      {/* Rest of the app comes ABOVE the action button component !*/}
-      <ActionButton buttonColor='rgba(231,76,60,1)'>
-        <ActionButton.Item
-          buttonColor='#9b59b6'
-          title='New Task'
-          onPress={() => console.log('notes tapped!')}
-        >
-          <Icon name='md-create' style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor='#3498db'
-          title='Notifications'
-          onPress={() => {}}
-        >
-          <Icon name='md-notifications-off' style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor='#1abc9c'
-          title='All Tasks'
-          onPress={() => {}}
-        >
-          <Icon name='md-done-all' style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-      </ActionButton>
-    </View>
-  )
+  componentDidUpdate(prevProps) {
+    if (this.props.visible !== prevProps.visible) {
+      this.setState({ visible: this.props.visible })
+    }
+    if (this.props.mediaType !== prevProps.mediaType) {
+      this.setState({ mediaType: this.props.mediaType })
+    }
+    if (this.props.item !== prevProps.item) {
+      this.setState({ item: this.props.item })
+    }
+  }
+  handleClick(listType) {
+    FirebaseWrapper.getInstance().addMedia(
+      this.state.mediaType,
+      listType,
+      this.state.item
+    )
+  }
+
+  render() {
+    return (
+      <Modal
+        visible={this.state.visible}
+        hasBackdrop={true}
+        onBackdropPress={() => {
+          this.setState({ visible: false })
+          this.props.toggleModal()
+        }}
+      >
+        <View style={styles.container}>
+          <Button
+            title='Add to Current'
+            onPress={() => {
+              this.handleClick('current')
+              this.props.toggleModal()
+            }}
+          />
+          <Button
+            title='Add to Plan to'
+            onPress={() => {
+              this.handleClick('planTo')
+              this.props.toggleModal()
+            }}
+          />
+          <Button
+            title='Add to Completed'
+            onPress={() => {
+              this.handleClick('completed')
+              this.props.toggleModal()
+            }}
+          />
+          <Button
+            title='Add to Dropped'
+            onPress={() => {
+              this.handleClick('dropped')
+              this.props.toggleModal()
+            }}
+          />
+          <Button
+            title='Add to On Hold'
+            onPress={() => {
+              this.handleClick('onHold')
+              this.props.toggleModal()
+            }}
+          />
+          <Button title='close' onPress={() => this.props.toggleModal()} />
+        </View>
+      </Modal>
+    )
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
+    flex: 1,
+  },
+})

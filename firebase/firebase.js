@@ -1,20 +1,21 @@
 import * as firebase from 'firebase'
+import axios from 'axios'
 
-import 'firebase/firestore'
+import 'firebase/database'
 
 export default class FirebaseWrapper {
   constructor() {
     this.initialized = false
     this._firebaseInstance = null // instance of our npm package
     //this._firebaseWrapperInstance = null // instance of our wrapper
-    this._firestore = null
+    this._database = null
   }
 
   initialize(config) {
     if (!this.initialized) {
       // initialize firebase
       this._firebaseInstance = firebase.initializeApp(config)
-      this._firestore = firebase.firestore()
+      this._database = firebase.database()
       this.initialized = true
 
       console.log('FIREBASE initialized, woohoo!')
@@ -58,16 +59,7 @@ export default class FirebaseWrapper {
   }
 
   async wrapperOnAuthStateChanged(callback) {
-    // console.log(
-    //   this._firebaseInstance
-    //     .auth()
-    //     .onAuthStateChanged(user => console.log(user))
-    // )
     return await this._firebaseInstance.auth().onAuthStateChanged(callback)
-  }
-
-  async wrapperCurrentUser() {
-    return await this._firebaseInstance.auth().currentUser
   }
 
   async createUserEmailPassword(email, password) {
@@ -82,4 +74,63 @@ export default class FirebaseWrapper {
       console.log('Trouble signing up ?', errorCode, errorMessage)
     }
   }
+
+  async addMedia(mediaType, listType, item) {
+    try {
+      if (!mediaTypes.includes(mediaType)) {
+        throw 'Not a valid media type!'
+      }
+      if (!listTypes.includes(listType)) {
+        throw 'Not a valid list type!'
+      }
+      const uid = this._firebaseInstance.auth().currentUser.uid
+      const capMedia = mediaType[0].toUpperCase() + mediaType.slice(1)
+      const pluralMedia = mediaType + 's'
+      const capList = listType[0].toUpperCase() + listType.slice(1)
+      const id = item.ISBN ? item.ISBN : item.id
+      await this._database.ref(`/${pluralMedia}/${id}`).set(item)
+      await this._database
+        .ref(`users${capMedia}Lists/${uid}/${listType}/${id}`)
+        .set(item)
+      await this._database
+        .ref(`user${capList}/${uid}/${mediaType}/${id}`)
+        .set(item)
+    } catch (error) {
+      console.error('problem adding media:', error)
+    }
+  }
+
+  async getListsByStatus(listType) {
+    try {
+      const uid = this._firebaseInstance.auth().currentUser.uid
+      console.log(uid)
+      if (!listTypes.includes(listType)) throw 'not a valid list type'
+      const colName = 'user' + listType[0].toUpperCase() + listType.slice(1)
+      const lists = await axios.get(
+        `https://gitclonewars.firebaseio.com/${colName}/${uid}.json`
+      )
+      return lists.data
+    } catch (error) {
+      console.error('problem getting lists:', error)
+    }
+  }
+  async getListsByMedia(mediaType) {
+    try {
+      const uid = await this._firebaseInstance.auth().currentUser.uid
+      if (!mediaTypes.includes(mediaType)) throw 'not a valid media type'
+      const colName =
+        'users' + mediaType[0].toUpperCase() + mediaType.slice(1) + 'Lists'
+      const lists = await axios.get(
+        `https://gitclonewars.firebaseio.com/${colName}/${uid}.json`
+      )
+      return lists.data
+    } catch (error) {
+      console.error('problem getting lists:', error)
+    }
+  }
 }
+
+const mediaTypes = ['book', 'movie', 'tvShow']
+const listTypes = ['current', 'completed', 'planTo', 'onHold', 'dropped']
+
+//FirebaseWrapper.getInstance().addMedia('book', 'completed', { isbn: 123 })
