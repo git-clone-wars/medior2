@@ -87,7 +87,7 @@ export default class FirebaseWrapper {
       const capMedia = mediaType[0].toUpperCase() + mediaType.slice(1)
       const pluralMedia = mediaType + 's'
       const capList = listType[0].toUpperCase() + listType.slice(1)
-      const id = item.isbn ? item.isbn : item.id
+      const id = item.ISBN ? item.ISBN : item.id
       await this._database.ref(`/${pluralMedia}/${id}`).set(item)
       await this._database
         .ref(`users${capMedia}Lists/${uid}/${listType}/${id}`)

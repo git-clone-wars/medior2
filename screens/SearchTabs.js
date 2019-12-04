@@ -44,7 +44,7 @@ export default class SearchTabs extends React.Component {
           renderScene={({ route }) => {
             switch (route.key) {
               case 'mov':
-                return <MovieResults movies={this.props.movies} />
+                return <MovieResults movies={this.props.movies} detailsNav={this.props.detailsNav} />
               case 'book':
                 return <BookResults books={this.props.books} detailsNav={this.props.detailsNav} />
               default:
@@ -86,7 +86,7 @@ const MovieResults = props => {
               },
             }}
             button
-            onPress={() => console.log('button pressed!')}
+            onPress={() => props.detailsNav.navigate('MovieDetailsScreen', { movie: item })}
           />
         )}
         keyExtractor={item => item['id'].toString()}
