@@ -1,7 +1,7 @@
 import { movie_api } from '../secrets'
 import axios from 'axios'
 
-const movieSearch = async query => {
+export const movieSearch = async query => {
   try {
     if (query.length > 0) {
       const { data } = await axios.get(
@@ -15,24 +15,26 @@ const movieSearch = async query => {
   }
 }
 
-export default movieSearch
+export const sanitizeMovieData = result => {
+  const formattedQuery = {}
 
-// movie book formatting
+  formattedQuery['poster'] = result.poster_path
 
-// movie (has id)
-//poster: `http://image.tmdb.org/t/p/original/${movie.poster_path}`
-//title: movie.title
-// released: movie.release_date
+  formattedQuery['id'] = result.id
 
-//overview: movie.overview
+  formattedQuery['title'] = result.title
 
-// book (has id)
-// poster: book.volumeInfo.imageLinks.thumbnail
-// title: book.volumeInfo.title
-// author(s): book.volumeInfo.authors (will have to be mapped through )
-//released: book.volumeInfo.publishedDate
+  formattedQuery['overview'] = result.overview
 
-//overview: book.volumeInfo.description
+  if (result.release_date.length > 5) {
+    formattedQuery['releaseDate'] = result.release_date.slice(0, 4)
+  } else {
+    formattedQuery['releaseDate'] = result.release_date
+  }
 
-// APPROACH?
-// multiple flat lists, map through two different data sets (From state)
+  console.log('MOVIES FORMATTED', formattedQuery)
+  return formattedQuery
+}
+
+// from movies
+// poster, id, title, overview, releasedate,

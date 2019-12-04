@@ -77,19 +77,19 @@ const MovieResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-            title={`${item.title} (${item.release_date.slice(0, 4)})`}
+            title={`${item['title']} (${item['releaseDate']})`}
             leftAvatar={{
               rounded: false,
               size: 'large',
               source: {
-                uri: `http://image.tmdb.org/t/p/original${item.poster_path}`,
+                uri: `http://image.tmdb.org/t/p/original${item['poster']}`,
               },
             }}
             button
             onPress={() => console.log('button pressed!')}
           />
         )}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item['id']}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>
@@ -107,18 +107,19 @@ const BookResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-            title={`${item.volumeInfo.title} (${item.volumeInfo.publishedDate})`}
-            subtitle={`${item.volumeInfo.authors}`}
+
+            title={`${item['title']} (${item['publishedDate']})`}
+            subtitle={`${item['authors']}`}
             leftAvatar={{
               rounded: false,
               size: 'large',
               source: {
-                uri: item.volumeInfo.imageLinks.thumbnail,
+                uri: item['thumbnail'],
               },
             }}
           />
         )}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item['ISBN']}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>
