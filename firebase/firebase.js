@@ -1,6 +1,7 @@
 import * as firebase from 'firebase'
+import axios from 'axios'
 
-import 'firebase/firestore'
+import 'firebase/database'
 
 export default class FirebaseWrapper {
   constructor() {
@@ -86,26 +87,13 @@ export default class FirebaseWrapper {
       const capMedia = mediaType[0].toUpperCase() + mediaType.slice(1)
       const pluralMedia = mediaType + 's'
       const capList = listType[0].toUpperCase() + listType.slice(1)
-      const ref = item.isbn ? item.isbn : item.id
-      await this._firestore
-        .doc(`/${pluralMedia}/${ref}`)
-        .get()
-        .then(docSnapshot => {
-          if (!docSnapshot.exists) {
-            this._firestore
-              .collection(`${pluralMedia}/`)
-              .doc(ref)
-              .set(item)
-          }
-        })
-
-      await this._firestore
-        .collection(`users${capMedia}Lists/${uid}/${listType}/`)
-        .doc(ref)
+      const id = item.isbn ? item.isbn : item.id
+      await this._database.ref(`/${pluralMedia}/${id}`).set(item)
+      await this._database
+        .ref(`users${capMedia}Lists/${uid}/${listType}/${id}`)
         .set(item)
-      await this._firestore
-        .collection(`user${capList}/${uid}/${mediaType}/`)
-        .doc(ref)
+      await this._database
+        .ref(`user${capList}/${uid}/${mediaType}/${id}`)
         .set(item)
     } catch (error) {
       console.error('problem adding media:', error)
@@ -118,11 +106,10 @@ export default class FirebaseWrapper {
       console.log(uid)
       if (!listTypes.includes(listType)) throw 'not a valid list type'
       const colName = 'user' + listType[0].toUpperCase() + listType.slice(1)
-      console.log(colName)
-      const docRef = this._firestore.doc(`${colName}/${uid}`)
-      const collections = await docRef.getCollections()
-      console.log(collections)
-      //return doc.exists ? doc.data() : 'no such document'
+      const lists = await axios.get(
+        `https://gitclonewars.firebaseio.com/${colName}/${uid}.json`
+      )
+      return lists.data
     } catch (error) {
       console.error('problem getting lists:', error)
     }
@@ -133,16 +120,10 @@ export default class FirebaseWrapper {
       if (!mediaTypes.includes(mediaType)) throw 'not a valid media type'
       const colName =
         'users' + mediaType[0].toUpperCase() + mediaType.slice(1) + 'Lists'
-      console.log(colName)
-      const docRef = this._firestore.collection(`${colName}`).doc(uid)
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-          return doc.data()
-        } else {
-          return 'no such doc'
-        }
-      })
-      //return doc.exists ? doc.data() : 'no such doc'
+      const lists = await axios.get(
+        `https://gitclonewars.firebaseio.com/${colName}/${uid}.json`
+      )
+      return lists.data
     } catch (error) {
       console.error('problem getting lists:', error)
     }
