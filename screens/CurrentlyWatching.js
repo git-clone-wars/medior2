@@ -55,18 +55,48 @@ export default class CurrentlyWatching extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.state.current = FirebaseWrapper.getInstance().getListsByStatus(
-      'current'
-    )
+  async componentDidMount() {
+    try {
+      const fetchedCurrent = await FirebaseWrapper.getInstance().getListsByStatus(
+        'current'
+      )
+
+      this.setState({
+        current: fetchedCurrent,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async componentDidUpdate() {
+    try {
+      const fetchedCurrent = await FirebaseWrapper.getInstance().getListsByStatus(
+        'current'
+      )
+
+      this.setState({
+        current: fetchedCurrent,
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {
+    console.log('HERE IS THE CURRENT STATE', this.state.current)
+    const listOfMovies = []
+    this.state.current.movie &&
+      Object.keys(this.state.current.movie).map(id =>
+        listOfMovies.push(this.state.current.movie[id])
+      )
+    console.log('list of movies', listOfMovies)
+
     return (
       <View style={[styles.scene, { backgroundColor: '#212730' }]}>
         {this.state.current.movie ? (
           <FlatList
-            data={this.state.current}
+            data={listOfMovies}
             horizontal={true}
             containerStyle={{
               borderBottomWidth: 0,
