@@ -11,7 +11,7 @@ export default createAppContainer(
       Test: Test,
     },
     {
-      initialRouteName: 'Test',
+      initialRouteName: 'Main',
     }
   )
 )
