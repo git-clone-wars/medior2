@@ -5,17 +5,17 @@ import {
   createStackNavigator,
   createBottomTabNavigator,
 } from 'react-navigation'
+
 //components
 
 import TabBarIcon from '../components/TabBarIcon'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 //screens
 import HomeScreen from '../screens/HomeScreen'
 import ScannerScreen from '../screens/ScannerScreen'
 import BookDetails from '../screens/BookDetailsScreen'
 import SearchScreen from '../screens/SearchScreen'
-
-
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -32,13 +32,11 @@ const HomeStack = createStackNavigator(
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
+    <MaterialCommunityIcons
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name='meteor'
+      size={32}
+      color='#a33f34'
     />
   ),
 }
