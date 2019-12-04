@@ -25,15 +25,12 @@ export const bookSearch = async query => {
   }
 }
 
-export const sanitizeData = item => {
+export const sanitizeBookData = item => {
   const formattedQuery = {}
   formattedQuery['authors'] = item.volumeInfo.authors
   // authors is an array
 
   formattedQuery['title'] = item.volumeInfo.title
-
-  // formattedQuery['publishedDate'] = item.volumeInfo.publishedDate
-  // format "YYY-MM-DD"
 
   if (item.volumeInfo.publishedDate.length > 5) {
     formattedQuery['publishedDate'] = item.volumeInfo.publishedDate.slice(0, 4)
@@ -58,6 +55,6 @@ export const sanitizeData = item => {
   } else {
     formattedQuery['thumbnail'] = 'https://tinyurl.com/tfbxys2'
   }
-  console.log('BOOKS FORMATTED', formattedQuery)
+  // console.log('BOOKS FORMATTED', formattedQuery)
   return formattedQuery
 }

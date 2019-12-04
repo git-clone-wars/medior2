@@ -69,19 +69,19 @@ const MovieResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-            title={`${item.title} (${item.release_date.slice(0, 4)})`}
+            title={`${item['title']} (${item['releaseDate']})`}
             leftAvatar={{
               rounded: false,
               size: 'large',
               source: {
-                uri: `http://image.tmdb.org/t/p/original${item.poster_path}`,
+                uri: `http://image.tmdb.org/t/p/original${item['poster']}`,
               },
             }}
             button
             onPress={() => console.log('button pressed!')}
           />
         )}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item['id']}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>

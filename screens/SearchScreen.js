@@ -15,8 +15,8 @@ import {
   MaterialIcons,
 } from '@expo/vector-icons'
 import { SearchBar, List, ListItem } from 'react-native-elements'
-import movieSearch from '../external-APIs/moviesApi'
-import { bookSearch, sanitizeData } from '../external-APIs/booksApi'
+import { movieSearch, sanitizeMovieData } from '../external-APIs/moviesApi'
+import { bookSearch, sanitizeBookData } from '../external-APIs/booksApi'
 import _ from 'lodash'
 
 import { TabView, SceneMap } from 'react-native-tab-view'
@@ -53,10 +53,14 @@ export default class Search extends React.Component {
 
   fetchData = _.debounce(() => {
     movieSearch(this.state.query)
-      .then(responseJson => {
-        console.log(responseJson.results.length, 'movies returned')
+      .then(res => {
+        // console.log(responseJson.results.length, 'movies returned')
+        const formattedM = res.results.map(result => {
+          return sanitizeMovieData(result)
+        })
+
         this.setState({
-          movieResults: [...responseJson.results],
+          movieResults: [...formattedM],
         })
       })
       .catch(error => {
@@ -66,12 +70,12 @@ export default class Search extends React.Component {
       .then(responseJson => {
         // console.log(responseJson.items.length, 'books returned')
 
-        const formatted = responseJson.items.map(item => {
-          return sanitizeData(item)
+        const formattedB = responseJson.items.map(item => {
+          return sanitizeBookData(item)
         })
 
         this.setState({
-          bookResults: [...formatted],
+          bookResults: [...formattedB],
         })
       })
       .catch(error => {
