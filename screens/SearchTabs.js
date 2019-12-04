@@ -99,6 +99,7 @@ const BookResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
+
             title={`${item['title']} (${item['publishedDate']})`}
             subtitle={`${item['authors']}`}
             leftAvatar={{
