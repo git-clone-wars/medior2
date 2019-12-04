@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
-import { List, ListItem } from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 
 export default class SearchTabs extends React.Component {
   constructor(props) {
@@ -59,7 +59,6 @@ export default class SearchTabs extends React.Component {
             activeColor='#8bf6f5'
             inactiveColor='#393e46'
             indicatorStyle={{ backgroundColor: '#a33f34' }}
-
           />}
         />
       </View>
@@ -89,7 +88,7 @@ const MovieResults = props => {
             onPress={() => console.log('button pressed!')}
           />
         )}
-        keyExtractor={item => item['id']}
+        keyExtractor={item => item['id'].toString()}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>
@@ -117,9 +116,11 @@ const BookResults = props => {
                 uri: item['thumbnail'],
               },
             }}
+            button
+            onPress={() => console.log('button pressed on', item['title'])}
           />
         )}
-        keyExtractor={item => item['ISBN']}
+        keyExtractor={item => item['ISBN'].toString()}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>
@@ -136,8 +137,4 @@ const styles = StyleSheet.create({
   },
 })
 
-// leftAvatar={{
-//   uri: `http://image.tmdb.org/t/p/original${item.poster_path}`,
-//   rounded: false,
-//   size: 'large',
-// }}
+
