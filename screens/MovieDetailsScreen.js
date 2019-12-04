@@ -3,18 +3,18 @@ import * as React from 'react'
 import { Text, View, Button } from 'react-native'
 import { Card } from 'react-native-elements'
 
-export default class BookDetails extends React.Component {
+export default class MovieDetails extends React.Component {
   render() {
     const { navigation } = this.props
-    const book = navigation.getParam('book')
-    console.log(book)
+    const movie = navigation.getParam('movie')
+    console.log(movie)
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#212730' }}>
         <Card
-          title={`${book.title} by ${book.authors[0]}`}
-          image={book.thumbnail}>
+          title={`${movie.title} (${movie.releaseDate})`}
+          image={movie.poster}>
           <Text style={{ marginBottom: 10 }}>
-            {book.longDesc}
+            {movie.overview}
           </Text>
         </Card>
         <Button

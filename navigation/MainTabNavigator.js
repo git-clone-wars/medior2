@@ -14,6 +14,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import HomeScreen from '../screens/HomeScreen'
 import ScannerScreen from '../screens/ScannerScreen'
 import BookDetails from '../screens/BookDetailsScreen'
+import MovieDetails from '../screens/MovieDetailsScreen'
 import SearchScreen from '../screens/SearchScreen'
 
 const config = Platform.select({
@@ -64,7 +65,8 @@ ScannerStack.path = ''
 const SearchStack = createStackNavigator(
   {
     Search: SearchScreen,
-    BookDetailsScreen: BookDetails
+    BookDetailsScreen: BookDetails,
+    MovieDetailsScreen: MovieDetails
   },
   config
 )
