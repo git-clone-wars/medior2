@@ -46,7 +46,7 @@ export default class SearchTabs extends React.Component {
               case 'mov':
                 return <MovieResults movies={this.props.movies} />
               case 'book':
-                return <BookResults books={this.props.books} />
+                return <BookResults books={this.props.books} detailsNav={this.props.detailsNav} />
               default:
                 return null
             }
@@ -69,6 +69,7 @@ export default class SearchTabs extends React.Component {
 const MovieResults = props => {
   const { movies } = props
   // this is coming in as an array
+
   return (
     <View style={[styles.scene, { backgroundColor: '#212730' }]}>
       <FlatList
@@ -98,7 +99,6 @@ const MovieResults = props => {
 const BookResults = props => {
   const { books } = props
   // this is coming in as an array
-
   return (
     <View style={[styles.scene, { backgroundColor: '#212730' }]}>
       <FlatList
@@ -106,7 +106,6 @@ const BookResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-
             title={`${item['title']} (${item['publishedDate']})`}
             subtitle={`${item['authors']}`}
             leftAvatar={{
@@ -117,7 +116,7 @@ const BookResults = props => {
               },
             }}
             button
-            onPress={() => console.log('button pressed on', item['title'])}
+            onPress={() => props.detailsNav.navigate('BookDetailsScreen', { book: item })}
           />
         )}
         keyExtractor={item => item['ISBN'].toString()}
