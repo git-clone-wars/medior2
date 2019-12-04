@@ -7,14 +7,14 @@ export default class FirebaseWrapper {
     this.initialized = false
     this._firebaseInstance = null // instance of our npm package
     //this._firebaseWrapperInstance = null // instance of our wrapper
-    this._firestore = null
+    this._database = null
   }
 
   initialize(config) {
     if (!this.initialized) {
       // initialize firebase
       this._firebaseInstance = firebase.initializeApp(config)
-      this._firestore = firebase.firestore()
+      this._database = firebase.database()
       this.initialized = true
 
       console.log('FIREBASE initialized, woohoo!')
@@ -58,11 +58,6 @@ export default class FirebaseWrapper {
   }
 
   async wrapperOnAuthStateChanged(callback) {
-    // console.log(
-    //   this._firebaseInstance
-    //     .auth()
-    //     .onAuthStateChanged(user => console.log(user))
-    // )
     return await this._firebaseInstance.auth().onAuthStateChanged(callback)
   }
 
@@ -88,27 +83,68 @@ export default class FirebaseWrapper {
         throw 'Not a valid list type!'
       }
       const uid = this._firebaseInstance.auth().currentUser.uid
-      if (mediaType === 'book') {
-        const ref = item.isbn
-        this._firestore
-          .doc(`/books/${ref}`)
-          .get()
-          .then(docSnapshot => {
-            if (!docSnapshot.exists) {
-              this._firestore.collection(`books/${ref}`).set
-            }
-          })
+      const capMedia = mediaType[0].toUpperCase() + mediaType.slice(1)
+      const pluralMedia = mediaType + 's'
+      const capList = listType[0].toUpperCase() + listType.slice(1)
+      const ref = item.isbn ? item.isbn : item.id
+      await this._firestore
+        .doc(`/${pluralMedia}/${ref}`)
+        .get()
+        .then(docSnapshot => {
+          if (!docSnapshot.exists) {
+            this._firestore
+              .collection(`${pluralMedia}/`)
+              .doc(ref)
+              .set(item)
+          }
+        })
 
-        this._firebaseInstance.firestore
-        this._firebaseInstance.firestore
-          .ref(`usersBookLists/${uid}/${listType}/${ref}`)
-          .set(item)
-        this._firebaseInstance.firestore
-          .ref(`userLists/${uid}/${listType}/${mediaType}/${ref}`)
-          .set(item)
-      }
+      await this._firestore
+        .collection(`users${capMedia}Lists/${uid}/${listType}/`)
+        .doc(ref)
+        .set(item)
+      await this._firestore
+        .collection(`user${capList}/${uid}/${mediaType}/`)
+        .doc(ref)
+        .set(item)
     } catch (error) {
       console.error('problem adding media:', error)
+    }
+  }
+
+  async getListsByStatus(listType) {
+    try {
+      const uid = this._firebaseInstance.auth().currentUser.uid
+      console.log(uid)
+      if (!listTypes.includes(listType)) throw 'not a valid list type'
+      const colName = 'user' + listType[0].toUpperCase() + listType.slice(1)
+      console.log(colName)
+      const docRef = this._firestore.doc(`${colName}/${uid}`)
+      const collections = await docRef.getCollections()
+      console.log(collections)
+      //return doc.exists ? doc.data() : 'no such document'
+    } catch (error) {
+      console.error('problem getting lists:', error)
+    }
+  }
+  async getListsByMedia(mediaType) {
+    try {
+      const uid = await this._firebaseInstance.auth().currentUser.uid
+      if (!mediaTypes.includes(mediaType)) throw 'not a valid media type'
+      const colName =
+        'users' + mediaType[0].toUpperCase() + mediaType.slice(1) + 'Lists'
+      console.log(colName)
+      const docRef = this._firestore.collection(`${colName}`).doc(uid)
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          return doc.data()
+        } else {
+          return 'no such doc'
+        }
+      })
+      //return doc.exists ? doc.data() : 'no such doc'
+    } catch (error) {
+      console.error('problem getting lists:', error)
     }
   }
 }
