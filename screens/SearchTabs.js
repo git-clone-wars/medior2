@@ -170,7 +170,9 @@ const TVResults = props => {
               },
             }}
             button
-            onPress={() => console.log('button pressed! stop that')}
+            onPress={() =>
+              props.detailsNav.navigate('TVDetailsScreen', { tv: item })
+            }
           />
         )}
         keyExtractor={item => item['id'].toString()}

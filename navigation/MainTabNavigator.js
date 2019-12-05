@@ -15,6 +15,7 @@ import HomeScreen from '../screens/HomeScreen'
 import ScannerScreen from '../screens/ScannerScreen'
 import BookDetails from '../screens/BookDetailsScreen'
 import MovieDetails from '../screens/MovieDetailsScreen'
+import TVDetails from '../screens/TVDetailsScreen'
 import SearchScreen from '../screens/SearchScreen'
 
 const config = Platform.select({
@@ -66,7 +67,8 @@ const SearchStack = createStackNavigator(
   {
     Search: SearchScreen,
     BookDetailsScreen: BookDetails,
-    MovieDetailsScreen: MovieDetails
+    MovieDetailsScreen: MovieDetails,
+    TVDetailsScreen: TVDetails,
   },
   config
 )
@@ -85,19 +87,21 @@ SearchStack.navigationOptions = {
 
 SearchStack.path = ''
 
-const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  SearchStack,
-  ScannerStack,
-},
+const tabNavigator = createBottomTabNavigator(
+  {
+    HomeStack,
+    SearchStack,
+    ScannerStack,
+  },
   {
     tabBarOptions: {
       activeTintColor: '#8bf6f5',
       inactiveTintColor: '#393e46',
       activeBackgroundColor: '#212730',
-      inactiveBackgroundColor: '#212730'
-    }
-  })
+      inactiveBackgroundColor: '#212730',
+    },
+  }
+)
 
 tabNavigator.path = ''
 
