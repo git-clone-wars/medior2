@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
   imageThumbnail: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: Math.round(Dimensions.get('window').height / 5),
-    width: Math.round(Dimensions.get('window').height / (2 / 15))
+    height: 100,
+    width: 67
   }
 })
 
