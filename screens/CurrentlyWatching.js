@@ -36,7 +36,6 @@ class CurrentlyWatching extends React.Component {
     let listOfMovies = []
     if (this.state.current.movie) {
       listOfMovies = Object.values(this.state.current.movie)
-      console.log(listOfMovies)
     } else {
       listOfMovies = []
     }
