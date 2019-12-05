@@ -28,10 +28,7 @@ export default class MovieDetails extends React.Component {
           backgroundColor: '#212730',
         }}
       >
-        <Card
-          title={`${movie.title} (${movie.releaseDate})`}
-          image={movie.poster}
-        >
+        <Card title={`${movie.title} (${movie.date})`} image={movie.poster}>
           <Text style={{ marginBottom: 10 }}>{movie.overview}</Text>
         </Card>
         <Button

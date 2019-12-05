@@ -32,10 +32,12 @@ export const sanitizeBookData = item => {
 
   formattedQuery['title'] = item.volumeInfo.title
 
-  if (item.volumeInfo.publishedDate.length > 5) {
+  formattedQuery['publishedDate'] = item.volumeInfo.publishedDate
+    ? item.volumeInfo.publishedDate
+    : ''
+
+  if (formattedQuery['publishedDate'].length > 5) {
     formattedQuery['publishedDate'] = item.volumeInfo.publishedDate.slice(0, 4)
-  } else {
-    formattedQuery['publishedDate'] = item.volumeInfo.publishedDate
   }
 
   formattedQuery['categories'] = item.volumeInfo.categories
