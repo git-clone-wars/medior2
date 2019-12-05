@@ -40,23 +40,6 @@ export const sanitizeTVData = result => {
       ? `${formattedQuery['title']} (${formattedQuery['date']})`
       : formattedQuery['title']
 
-    // console.log('formatted TV result', formattedQuery)
     return formattedQuery
   }
 }
-
-export const noUndefined = obj => {
-  if (Object.keys(obj).length !== 0) {
-    return obj
-  }
-}
-
-// if (result.first_air_date === '' || result.first_air_date === undefined) {
-//   formattedQuery['titleDate'] === result.name
-// } else if (result.first_air_date.length > 5) {
-//   formattedQuery['titleDate'] = `${
-//     result.name
-//   } (${result.first_air_date.slice(0, 4)})`
-// } else {
-//   formattedQuery['titleDate'] = `${result.name} (${result.first_air_date})`
-// }

@@ -86,11 +86,11 @@ export default class Search extends React.Component {
       })
     tvSearch(this.state.query)
       .then(resJson => {
-        // console.log(responseJson.results.length, 'movies returned')
+        // console.log(responseJson.results.length, 'TV shows returned')
         const formattedT = resJson.results.map(result => {
           return sanitizeTVData(result)
         })
-        console.log('formatted TV result', formattedT)
+
         this.setState({
           tvResults: [...formattedT],
         })
