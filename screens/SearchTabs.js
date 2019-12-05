@@ -76,7 +76,7 @@ export default class SearchTabs extends React.Component {
               {...props}
               style={{ backgroundColor: '#212730' }}
               activeColor='#8bf6f5'
-              inactiveColor='#393e46'
+              inactiveColor='#5D6167'
               indicatorStyle={{ backgroundColor: '#a33f34' }}
             />
           )}
