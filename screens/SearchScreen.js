@@ -104,7 +104,7 @@ export default class Search extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <SearchBar
-          placeholder='Search Movies and Books...'
+          placeholder='Search Movies, Books, TV Shows...'
           onChangeText={this.handleSearch}
           searchIcon={smallIcon()}
           autoCorrect={true}

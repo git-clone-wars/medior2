@@ -4,7 +4,7 @@ import { Text, View, Button, SafeAreaView, ScrollView } from 'react-native'
 import { Card } from 'react-native-elements'
 import AddToListModal from '../components/AddToList'
 
-export default class BookDetails extends React.Component {
+export default class TVDetails extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -15,11 +15,10 @@ export default class BookDetails extends React.Component {
   toggleModal() {
     this.setState({ modalVisible: !this.state.modalVisible })
   }
-
   render() {
     const { navigation } = this.props
-    const book = navigation.getParam('book')
-    // console.log(book)
+    const tv = navigation.getParam('tv')
+    // console.log(tv)
     return (
       <SafeAreaView
         style={{
@@ -35,8 +34,9 @@ export default class BookDetails extends React.Component {
           }}
         >
           <Card
-            title={`${book.title} by ${book.authors[0]}`}
-            image={{ uri: book.thumbnail }}
+            containerStyle={{ padding: 20, flex: 1 }}
+            title={`${tv['titleDate']}`}
+            image={{ uri: `http://image.tmdb.org/t/p/original${tv.poster}` }}
             imageStyle={{
               width: 200,
               height: 275,
@@ -45,10 +45,10 @@ export default class BookDetails extends React.Component {
               justifyContent: 'center',
             }}
           >
-            <Text style={{ marginBottom: 10 }}>{book.longDesc}</Text>
+            <Text style={{ marginBottom: 10 }}>{tv.overview}</Text>
           </Card>
           <Button
-            title='Add to your lists!'
+            title='Add to Lists'
             onPress={() => {
               console.log('clicked')
               this.setState({ modalVisible: true })
@@ -60,8 +60,8 @@ export default class BookDetails extends React.Component {
           />
           <AddToListModal
             visible={this.state.modalVisible}
-            mediaType={'book'}
-            item={book}
+            mediaType={'tvShow'}
+            item={tv}
             toggleModal={this.toggleModal}
           />
         </ScrollView>

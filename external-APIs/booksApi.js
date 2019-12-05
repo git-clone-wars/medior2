@@ -28,6 +28,8 @@ export const bookSearch = async query => {
 export const sanitizeBookData = item => {
   const formattedQuery = {}
   formattedQuery['authors'] = item.volumeInfo.authors
+    ? item.volumeInfo.authors
+    : ['Anonymous']
   // authors is an array
 
   formattedQuery['title'] = item.volumeInfo.title
@@ -50,13 +52,10 @@ export const sanitizeBookData = item => {
 
   formattedQuery['ISBN'] = item.volumeInfo.industryIdentifiers[0].identifier
 
-  if (item.volumeInfo.imageLinks.thumbnail) {
-    formattedQuery['thumbnail'] = item.volumeInfo.imageLinks.thumbnail
-  } else if (item.volumeInfo.imageLinks.smallThumbnail) {
-    formattedQuery['thumbnail'] = item.volumeInfo.imageLinks.smallThumbnail
-  } else {
-    formattedQuery['thumbnail'] = 'https://tinyurl.com/tfbxys2'
-  }
+  formattedQuery['thumbnail'] = item.volumeInfo.imageLinks.thumbnail
+    ? item.volumeInfo.imageLinks.thumbnail
+    : 'https://tinyurl.com/vuvlh4g'
+
   // console.log('BOOKS FORMATTED', formattedQuery)
   return formattedQuery
 }
