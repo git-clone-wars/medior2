@@ -19,6 +19,7 @@ export default class SearchTabs extends React.Component {
       routes: [
         { key: 'mov', title: 'Movies' },
         { key: 'book', title: 'Books' },
+        { key: 'tv', title: 'Television' },
       ],
     }
   }
@@ -44,9 +45,26 @@ export default class SearchTabs extends React.Component {
           renderScene={({ route }) => {
             switch (route.key) {
               case 'mov':
-                return <MovieResults movies={this.props.movies} detailsNav={this.props.detailsNav} />
+                return (
+                  <MovieResults
+                    movies={this.props.movies}
+                    detailsNav={this.props.detailsNav}
+                  />
+                )
               case 'book':
-                return <BookResults books={this.props.books} detailsNav={this.props.detailsNav} />
+                return (
+                  <BookResults
+                    books={this.props.books}
+                    detailsNav={this.props.detailsNav}
+                  />
+                )
+              case 'tv':
+                return (
+                  <TVResults
+                    tv={this.props.tv}
+                    detailsNav={this.props.detailsNav}
+                  />
+                )
               default:
                 return null
             }
@@ -77,7 +95,7 @@ const MovieResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-            title={`${item['title']} (${item['releaseDate']})`}
+            title={`${item['titleDate']}`}
             leftAvatar={{
               rounded: false,
               size: 'large',
@@ -85,7 +103,14 @@ const MovieResults = props => {
                 uri: `http://image.tmdb.org/t/p/original${item['poster']}`,
               },
             }}
+<<<<<<< HEAD
             onPress={() => props.detailsNav.navigate('MovieDetailsScreen', { movie: item })}
+=======
+            button
+            onPress={() =>
+              props.detailsNav.navigate('MovieDetailsScreen', { movie: item })
+            }
+>>>>>>> e6097f8f1a8e2ececc7f9115ca3009d202d7ba9b
           />
         )}
         keyExtractor={item => item['id'].toString()}
@@ -114,7 +139,14 @@ const BookResults = props => {
                 uri: item['thumbnail'],
               },
             }}
+<<<<<<< HEAD
             onPress={() => props.detailsNav.navigate('BookDetailsScreen', { book: item })}
+=======
+            button
+            onPress={() =>
+              props.detailsNav.navigate('BookDetailsScreen', { book: item })
+            }
+>>>>>>> e6097f8f1a8e2ececc7f9115ca3009d202d7ba9b
           />
         )}
         keyExtractor={item => item['ISBN'].toString()}
@@ -123,6 +155,39 @@ const BookResults = props => {
     </View>
   )
 }
+
+const TVResults = props => {
+  const { tv } = props
+  // this is coming in as an array
+
+  return (
+    <View style={[styles.scene, { backgroundColor: '#212730' }]}>
+      <FlatList
+        data={tv}
+        containerStyle={{ borderBottomWidth: 0 }}
+        renderItem={({ item }) => (
+          <ListItem
+            title={`${item['titleDate']}`}
+            leftAvatar={{
+              rounded: false,
+              size: 'large',
+              source: {
+                uri: `http://image.tmdb.org/t/p/original${item['poster']}`,
+              },
+            }}
+            button
+            onPress={() => console.log('button pressed! stop that')}
+          />
+        )}
+        keyExtractor={item => item['id'].toString()}
+        ItemSeparatorComponent={this.renderSeparator}
+      />
+    </View>
+  )
+}
+
+// TV ON PRESS
+// onPress={() => props.detailsNav.navigate('TVDetailsScreen', { tv: item })}
 
 const styles = StyleSheet.create({
   scene: {
@@ -133,5 +198,3 @@ const styles = StyleSheet.create({
     height: 40,
   },
 })
-
-
