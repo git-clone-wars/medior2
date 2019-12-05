@@ -52,6 +52,10 @@ class HomeScreenTabs extends React.Component {
     if (this.state.current.book) {
       listOfBooks = Object.values(this.state.current.book).slice(0, 3)
     }
+    let listOfTvShows = []
+    if (this.state.current.tvShow) {
+      listOfTvShows = Object.values(this.state.current.book).slice(0, 3)
+    }
 
     return (
       <View style={[styles.scene, { backgroundColor: '#212730' }]}>
@@ -84,6 +88,33 @@ class HomeScreenTabs extends React.Component {
         />
         <FlatList
           data={listOfBooks}
+          horizontal={true}
+          containerStyle={{
+            borderBottomWidth: 3,
+            backgroundColor: '#104f55',
+          }}
+          renderItem={({ item }) => (
+            <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('BookDetailsScreen', {
+                    book: item,
+                  })
+                }
+              >
+                <Image
+                  style={styles.imageThumbnail}
+                  source={{
+                    uri: item.thumbnail,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+          keyExtractor={item => item.ISBN}
+        />
+        <FlatList
+          data={listOfTvShows}
           horizontal={true}
           containerStyle={{
             borderBottomWidth: 3,
