@@ -71,13 +71,15 @@ export default class SearchTabs extends React.Component {
           }}
           onIndexChange={index => this.setState({ index: index })}
           initialLayout={{ width: Dimensions.get('window').width }}
-          renderTabBar={props => <TabBar
-            {...props}
-            style={{ backgroundColor: '#212730' }}
-            activeColor='#8bf6f5'
-            inactiveColor='#CCCCCC'
-            indicatorStyle={{ backgroundColor: '#a33f34' }}
-          />}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              style={{ backgroundColor: '#212730' }}
+              activeColor='#8bf6f5'
+              inactiveColor='#CCCCCC'
+              indicatorStyle={{ backgroundColor: '#a33f34' }}
+            />
+          )}
         />
       </View>
     )
@@ -103,14 +105,9 @@ const MovieResults = props => {
                 uri: `http://image.tmdb.org/t/p/original${item['poster']}`,
               },
             }}
-<<<<<<< HEAD
-            onPress={() => props.detailsNav.navigate('MovieDetailsScreen', { movie: item })}
-=======
-            button
             onPress={() =>
               props.detailsNav.navigate('MovieDetailsScreen', { movie: item })
             }
->>>>>>> e6097f8f1a8e2ececc7f9115ca3009d202d7ba9b
           />
         )}
         keyExtractor={item => item['id'].toString()}
@@ -139,14 +136,10 @@ const BookResults = props => {
                 uri: item['thumbnail'],
               },
             }}
-<<<<<<< HEAD
-            onPress={() => props.detailsNav.navigate('BookDetailsScreen', { book: item })}
-=======
             button
             onPress={() =>
               props.detailsNav.navigate('BookDetailsScreen', { book: item })
             }
->>>>>>> e6097f8f1a8e2ececc7f9115ca3009d202d7ba9b
           />
         )}
         keyExtractor={item => item['ISBN'].toString()}

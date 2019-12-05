@@ -46,15 +46,15 @@ class HomeScreenTabs extends React.Component {
   render() {
     let listOfMovies = []
     if (this.state.current.movie) {
-      listOfMovies = Object.values(this.state.current.movie).slice(0, 3)
+      listOfMovies = Object.values(this.state.current.movie)
     }
     let listOfBooks = []
     if (this.state.current.book) {
-      listOfBooks = Object.values(this.state.current.book).slice(0, 3)
+      listOfBooks = Object.values(this.state.current.book)
     }
     let listOfTvShows = []
     if (this.state.current.tvShow) {
-      listOfTvShows = Object.values(this.state.current.book).slice(0, 3)
+      listOfTvShows = Object.values(this.state.current.book)
     }
 
     return (
@@ -113,7 +113,7 @@ class HomeScreenTabs extends React.Component {
           )}
           keyExtractor={item => item.ISBN}
         />
-        <FlatList
+        {/* <FlatList
           data={listOfTvShows}
           horizontal={true}
           containerStyle={{
@@ -138,8 +138,8 @@ class HomeScreenTabs extends React.Component {
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={item => item.ISBN}
-        />
+          keyExtractor={item => item.id}
+        /> */}
       </View>
     )
   }
