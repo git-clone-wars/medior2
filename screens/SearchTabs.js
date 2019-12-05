@@ -85,7 +85,6 @@ const MovieResults = props => {
                 uri: `http://image.tmdb.org/t/p/original${item['poster']}`,
               },
             }}
-            button
             onPress={() => props.detailsNav.navigate('MovieDetailsScreen', { movie: item })}
           />
         )}
@@ -115,7 +114,6 @@ const BookResults = props => {
                 uri: item['thumbnail'],
               },
             }}
-            button
             onPress={() => props.detailsNav.navigate('BookDetailsScreen', { book: item })}
           />
         )}

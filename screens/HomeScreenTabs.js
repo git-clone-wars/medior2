@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, SafeAreaView } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from 'react-native'
 import { ListItem, List } from 'react-native-elements'
 import { FlatList } from 'react-native-gesture-handler'
 import FirebaseWrapper from '../firebase/firebase'
@@ -49,21 +49,15 @@ class HomeScreenTabs extends React.Component {
             backgroundColor: '#104f55',
           }}
           renderItem={({ item }) => (
-            <ListItem
-              subtitle={item.title}
-              leftAvatar={{
-                rounded: false,
-                size: 'large',
-                source: {
-                  uri: `http://image.tmdb.org/t/p/original${item.poster}`,
-                },
-              }}
-              button
-              onPress={() => this.props.navigation.navigate('MovieDetailsScreen', { movie: item })}
-            />
+            <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('MovieDetailsScreen', { movie: item })} >
+                <Image style={styles.imageThumbnail} source={{ uri: `http://image.tmdb.org/t/p/original${item.poster}` }} />
+              </TouchableOpacity>
+
+            </View>
           )}
           keyExtractor={item => item['id'].toString()}
-          ItemSeparatorComponent={this.renderSeparator}
+          numColumns={3}
         />
       </View>
     )
@@ -74,6 +68,12 @@ const styles = StyleSheet.create({
   scene: {
     flex: 1,
   },
+  imageThumbnail: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: Math.round(Dimensions.get('window').height / 5),
+    width: Math.round(Dimensions.get('window').height / (2 / 15))
+  }
 })
 
 export default withNavigationFocus(HomeScreenTabs)
