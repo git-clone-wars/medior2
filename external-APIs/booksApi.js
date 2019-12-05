@@ -52,9 +52,10 @@ export const sanitizeBookData = item => {
 
   formattedQuery['ISBN'] = item.volumeInfo.industryIdentifiers[0].identifier
 
-  formattedQuery['thumbnail'] = item.volumeInfo.imageLinks.thumbnail
-    ? item.volumeInfo.imageLinks.thumbnail
-    : 'https://tinyurl.com/vuvlh4g'
+  formattedQuery['thumbnail'] =
+    item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail
+      ? item.volumeInfo.imageLinks.thumbnail
+      : 'https://tinyurl.com/vuvlh4g'
 
   // console.log('BOOKS FORMATTED', formattedQuery)
   return formattedQuery
