@@ -6,26 +6,10 @@ import {
   Dimensions, SafeAreaView
 } from 'react-native'
 
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
+import { TabView, TabBar } from 'react-native-tab-view'
 
-import CurrentlyWatching from './CurrentlyWatching'
+import HomeScreenTabs from './HomeScreenTabs'
 
-
-const SecondRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#212730' }]} />
-);
-
-const ThirdRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#212730' }]} />
-);
-
-const FourthRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#212730' }]} />
-);
-
-const FifthRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#212730' }]} />
-);
 
 export default class HomeScreen extends React.Component {
   constructor() {
@@ -33,7 +17,7 @@ export default class HomeScreen extends React.Component {
     this.state = {
       index: 0,
       routes: [
-        { key: 'first', title: 'Currenty Watching' },
+        { key: 'first', title: 'Currently Watching' },
         { key: 'second', title: 'Completed' },
         { key: 'third', title: 'Plan to Watch' },
         { key: 'fourth', title: 'On Hold' },
@@ -46,13 +30,22 @@ export default class HomeScreen extends React.Component {
     return (
       <TabView
         navigationState={this.state}
-        renderScene={SceneMap({
-          first: CurrentlyWatching,
-          second: SecondRoute,
-          third: ThirdRoute,
-          fourth: FourthRoute,
-          fifth: FifthRoute
-        })}
+        renderScene={({ route }) => {
+          switch (route.key) {
+            case 'first':
+              return <HomeScreenTabs tabName={'current'} />
+            case 'second':
+              return <HomeScreenTabs tabName={'completed'} />
+            case 'third':
+              return <HomeScreenTabs tabName={'planTo'} />
+            case 'fourth':
+              return <HomeScreenTabs tabName={'onHold'} />
+            case 'fifth':
+              return <HomeScreenTabs tabName={'dropped'} />
+            default:
+              return null
+          }
+        }}
         onIndexChange={index => this.setState({ index })}
         initialLayout={{ width: Dimensions.get('window').width }}
         renderTabBar={props => <TabBar
@@ -73,3 +66,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+

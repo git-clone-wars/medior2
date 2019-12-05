@@ -6,7 +6,7 @@ import FirebaseWrapper from '../firebase/firebase'
 import { withNavigationFocus } from 'react-navigation'
 
 
-class CurrentlyWatching extends React.Component {
+class HomeScreenTabs extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -19,8 +19,7 @@ class CurrentlyWatching extends React.Component {
       const { navigation } = this.props
 
       this.focusListener = navigation.addListener('didFocus', async () => {
-        const fetchedCurrent = await FirebaseWrapper.getInstance().getListsByStatus(
-          'current')
+        const fetchedCurrent = await FirebaseWrapper.getInstance().getListsByStatus(this.props.tabName)
         this.setState({
           current: fetchedCurrent,
         })
@@ -77,4 +76,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default withNavigationFocus(CurrentlyWatching)
+export default withNavigationFocus(HomeScreenTabs)
