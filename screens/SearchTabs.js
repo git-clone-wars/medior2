@@ -19,6 +19,7 @@ export default class SearchTabs extends React.Component {
       routes: [
         { key: 'mov', title: 'Movies' },
         { key: 'book', title: 'Books' },
+        { key: 'tv', title: 'Television' },
       ],
     }
   }
@@ -44,22 +45,41 @@ export default class SearchTabs extends React.Component {
           renderScene={({ route }) => {
             switch (route.key) {
               case 'mov':
-                return <MovieResults movies={this.props.movies} detailsNav={this.props.detailsNav} />
+                return (
+                  <MovieResults
+                    movies={this.props.movies}
+                    detailsNav={this.props.detailsNav}
+                  />
+                )
               case 'book':
-                return <BookResults books={this.props.books} detailsNav={this.props.detailsNav} />
+                return (
+                  <BookResults
+                    books={this.props.books}
+                    detailsNav={this.props.detailsNav}
+                  />
+                )
+              case 'tv':
+                return (
+                  <TVResults
+                    tv={this.props.tv}
+                    detailsNav={this.props.detailsNav}
+                  />
+                )
               default:
                 return null
             }
           }}
           onIndexChange={index => this.setState({ index: index })}
           initialLayout={{ width: Dimensions.get('window').width }}
-          renderTabBar={props => <TabBar
-            {...props}
-            style={{ backgroundColor: '#212730' }}
-            activeColor='#8bf6f5'
-            inactiveColor='#393e46'
-            indicatorStyle={{ backgroundColor: '#a33f34' }}
-          />}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              style={{ backgroundColor: '#212730' }}
+              activeColor='#8bf6f5'
+              inactiveColor='#393e46'
+              indicatorStyle={{ backgroundColor: '#a33f34' }}
+            />
+          )}
         />
       </View>
     )
@@ -77,7 +97,7 @@ const MovieResults = props => {
         containerStyle={{ borderBottomWidth: 0 }}
         renderItem={({ item }) => (
           <ListItem
-            title={`${item['title']} (${item['releaseDate']})`}
+            title={`${item['titleDate']}`}
             leftAvatar={{
               rounded: false,
               size: 'large',
@@ -86,7 +106,9 @@ const MovieResults = props => {
               },
             }}
             button
-            onPress={() => props.detailsNav.navigate('MovieDetailsScreen', { movie: item })}
+            onPress={() =>
+              props.detailsNav.navigate('MovieDetailsScreen', { movie: item })
+            }
           />
         )}
         keyExtractor={item => item['id'].toString()}
@@ -116,7 +138,9 @@ const BookResults = props => {
               },
             }}
             button
-            onPress={() => props.detailsNav.navigate('BookDetailsScreen', { book: item })}
+            onPress={() =>
+              props.detailsNav.navigate('BookDetailsScreen', { book: item })
+            }
           />
         )}
         keyExtractor={item => item['ISBN'].toString()}
@@ -125,6 +149,39 @@ const BookResults = props => {
     </View>
   )
 }
+
+const TVResults = props => {
+  const { tv } = props
+  // this is coming in as an array
+
+  return (
+    <View style={[styles.scene, { backgroundColor: '#212730' }]}>
+      <FlatList
+        data={tv}
+        containerStyle={{ borderBottomWidth: 0 }}
+        renderItem={({ item }) => (
+          <ListItem
+            title={`${item['titleDate']}`}
+            leftAvatar={{
+              rounded: false,
+              size: 'large',
+              source: {
+                uri: `http://image.tmdb.org/t/p/original${item['poster']}`,
+              },
+            }}
+            button
+            onPress={() => console.log('button pressed! stop that')}
+          />
+        )}
+        keyExtractor={item => item['id'].toString()}
+        ItemSeparatorComponent={this.renderSeparator}
+      />
+    </View>
+  )
+}
+
+// TV ON PRESS
+// onPress={() => props.detailsNav.navigate('TVDetailsScreen', { tv: item })}
 
 const styles = StyleSheet.create({
   scene: {
@@ -135,5 +192,3 @@ const styles = StyleSheet.create({
     height: 40,
   },
 })
-
-

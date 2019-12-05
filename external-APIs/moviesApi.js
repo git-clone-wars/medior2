@@ -27,11 +27,17 @@ export const sanitizeMovieData = result => {
 
   formattedQuery['overview'] = result.overview
 
+  formattedQuery['date'] = result.release_date ? result.release_date : ''
+
   if (result.release_date.length > 5) {
-    formattedQuery['releaseDate'] = result.release_date.slice(0, 4)
+    formattedQuery['date'] = result.release_date.slice(0, 4)
   } else {
-    formattedQuery['releaseDate'] = result.release_date
+    formattedQuery['date'] = result.release_date
   }
+
+  formattedQuery['titleDate'] = formattedQuery['date'].length
+    ? `${formattedQuery['title']} (${formattedQuery['date']})`
+    : formattedQuery['title']
 
   return formattedQuery
 }

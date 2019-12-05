@@ -17,6 +17,8 @@ import {
 import { SearchBar, List, ListItem } from 'react-native-elements'
 import { movieSearch, sanitizeMovieData } from '../external-APIs/moviesApi'
 import { bookSearch, sanitizeBookData } from '../external-APIs/booksApi'
+import { tvSearch, sanitizeTVData } from '../external-APIs/tvAPI'
+
 import _ from 'lodash'
 
 import { TabView, SceneMap } from 'react-native-tab-view'
@@ -30,6 +32,7 @@ export default class Search extends React.Component {
       query: '',
       movieResults: [],
       bookResults: [],
+      tvResults: [],
     }
   }
 
@@ -81,6 +84,20 @@ export default class Search extends React.Component {
       .catch(error => {
         console.log(error)
       })
+    tvSearch(this.state.query)
+      .then(resJson => {
+        // console.log(responseJson.results.length, 'movies returned')
+        const formattedT = resJson.results.map(result => {
+          return sanitizeTVData(result)
+        })
+        console.log('formatted TV result', formattedT)
+        this.setState({
+          tvResults: [...formattedT],
+        })
+      })
+      .catch(error => {
+        console.log(error) //to catch the errors if any
+      })
   }, 1000)
 
   render() {
@@ -99,6 +116,7 @@ export default class Search extends React.Component {
           detailsNav={this.props.navigation}
           movies={this.state.movieResults}
           books={this.state.bookResults}
+          tv={this.state.tvResults}
         />
       </SafeAreaView>
     )
