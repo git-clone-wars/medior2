@@ -26,6 +26,8 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
+    BookDetailsScreen: BookDetails,
+    MovieDetailsScreen: MovieDetails
   },
   config
 )
@@ -96,7 +98,7 @@ const tabNavigator = createBottomTabNavigator(
   {
     tabBarOptions: {
       activeTintColor: '#8bf6f5',
-      inactiveTintColor: '#393e46',
+      inactiveTintColor: '#CCCCCC',
       activeBackgroundColor: '#212730',
       inactiveBackgroundColor: '#212730',
     },

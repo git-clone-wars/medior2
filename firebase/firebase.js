@@ -103,7 +103,6 @@ export default class FirebaseWrapper {
   async getListsByStatus(listType) {
     try {
       const uid = this._firebaseInstance.auth().currentUser.uid
-      console.log(uid)
       if (!listTypes.includes(listType)) throw 'not a valid list type'
       const colName = 'user' + listType[0].toUpperCase() + listType.slice(1)
       const lists = await axios.get(
