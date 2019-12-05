@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import * as React from 'react'
-import { Text, View, Button } from 'react-native'
+import { Text, View, Button, SafeAreaView, ScrollView } from 'react-native'
 import { Card } from 'react-native-elements'
 import AddToListModal from '../components/AddToList'
 
@@ -20,7 +20,7 @@ export default class MovieDetails extends React.Component {
     const movie = navigation.getParam('movie')
     console.log(movie)
     return (
-      <View
+      <SafeAreaView
         style={{
           flex: 1,
           alignItems: 'center',
@@ -28,27 +28,44 @@ export default class MovieDetails extends React.Component {
           backgroundColor: '#212730',
         }}
       >
-        <Card title={`${movie.title} (${movie.date})`} image={movie.poster}>
-          <Text style={{ marginBottom: 10 }}>{movie.overview}</Text>
-        </Card>
-        <Button
-          title='Add to your lists!'
-          onPress={() => {
-            console.log('clicked')
-            this.setState({ modalVisible: true })
+        <ScrollView
+          style={{
+            marginHorizontal: 0,
           }}
-        />
-        <Button
-          onPress={() => this.props.navigation.goBack()}
-          title='Dismiss'
-        />
-        <AddToListModal
-          visible={this.state.modalVisible}
-          mediaType={'movie'}
-          item={movie}
-          toggleModal={this.toggleModal}
-        />
-      </View>
+        >
+          <Card
+            containerStyle={{ padding: 20, flex: 1 }}
+            title={`${movie.title} (${movie.date})`}
+            image={{ uri: `http://image.tmdb.org/t/p/original${movie.poster}` }}
+            imageStyle={{
+              width: 200,
+              height: 275,
+              // resizeMode: 'cover',
+              borderRadius: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ marginBottom: 10 }}>{movie.overview}</Text>
+          </Card>
+          <Button
+            title='Add to Lists'
+            onPress={() => {
+              console.log('clicked')
+              this.setState({ modalVisible: true })
+            }}
+          />
+          <Button
+            onPress={() => this.props.navigation.goBack()}
+            title='Dismiss'
+          />
+          <AddToListModal
+            visible={this.state.modalVisible}
+            mediaType={'movie'}
+            item={movie}
+            toggleModal={this.toggleModal}
+          />
+        </ScrollView>
+      </SafeAreaView>
     )
   }
 }
