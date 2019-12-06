@@ -29,6 +29,7 @@ const HomeStack = createStackNavigator(
     Home: HomeScreen,
     BookDetailsScreen: BookDetails,
     MovieDetailsScreen: MovieDetails,
+    TVDetailsScreen: TVDetails,
     SeeAllScreen: SeeAll,
   },
   config
