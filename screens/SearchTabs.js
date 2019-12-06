@@ -88,10 +88,13 @@ export default class SearchTabs extends React.Component {
 
 const MovieResults = props => {
   const { movies } = props
-  // this is coming in as an array
-
   return (
     <View style={[styles.scene, { backgroundColor: '#212730' }]}>
+      {!movies.length && (
+        <Text style={{ color: '#CCCCCC' }}>
+          {movies.length} movie results found
+        </Text>
+      )}
       <FlatList
         data={movies}
         containerStyle={{ borderBottomWidth: 0 }}
@@ -110,7 +113,7 @@ const MovieResults = props => {
             }
           />
         )}
-        keyExtractor={item => item['id'].toString()}
+        keyExtractor={item => movies.indexOf(item)}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>
@@ -122,6 +125,11 @@ const BookResults = props => {
   // this is coming in as an array
   return (
     <View style={[styles.scene, { backgroundColor: '#212730' }]}>
+      {!books.length && (
+        <Text style={{ color: '#CCCCCC' }}>
+          {books.length} book results found
+        </Text>
+      )}
       <FlatList
         data={books}
         containerStyle={{ borderBottomWidth: 0 }}
@@ -142,7 +150,7 @@ const BookResults = props => {
             }
           />
         )}
-        keyExtractor={item => item['ISBN'].toString()}
+        keyExtractor={item => books.indexOf(item)}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>
@@ -155,6 +163,9 @@ const TVResults = props => {
 
   return (
     <View style={[styles.scene, { backgroundColor: '#212730' }]}>
+      {!tv.length && (
+        <Text style={{ color: '#CCCCCC' }}>{tv.length} TV results found</Text>
+      )}
       <FlatList
         data={tv}
         containerStyle={{ borderBottomWidth: 0 }}
@@ -174,7 +185,7 @@ const TVResults = props => {
             }
           />
         )}
-        keyExtractor={item => item['id'].toString()}
+        keyExtractor={item => tv.indexOf(item)}
         ItemSeparatorComponent={this.renderSeparator}
       />
     </View>

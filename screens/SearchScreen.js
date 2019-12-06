@@ -57,7 +57,8 @@ export default class Search extends React.Component {
   fetchData = _.debounce(() => {
     movieSearch(this.state.query)
       .then(res => {
-        // console.log(responseJson.results.length, 'movies returned')
+        console.log(res)
+        console.log(res.results.length, 'movies returned')
         const formattedM = res.results.map(result => {
           return sanitizeMovieData(result)
         })
