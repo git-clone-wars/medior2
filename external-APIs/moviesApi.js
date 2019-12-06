@@ -10,7 +10,7 @@ export const movieSearch = async query => {
       return data
     }
   } catch (error) {
-    console.log('failed movie search:', error)
+    console.error('failed movie search:', error)
   }
 }
 
