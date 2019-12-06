@@ -57,6 +57,5 @@ export const sanitizeBookData = item => {
       ? item.volumeInfo.imageLinks.thumbnail
       : 'https://tinyurl.com/vuvlh4g'
 
-  // console.log('BOOKS FORMATTED', formattedQuery)
   return formattedQuery
 }
