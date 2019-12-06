@@ -16,11 +16,15 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
 
+const seeAllMovieImg = require('assets/images/seeallmovies.png')
+const seeAllBooksImg = require('assets/images/seeAllBooks.png')
+const seeAllTVImg = require('assets/images/seeAllTV.png')
+
 class HomeScreenTabs extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      current: {},
+      category: {},
     }
   }
 
@@ -29,12 +33,12 @@ class HomeScreenTabs extends React.Component {
       const { navigation } = this.props
 
       this.focusListener = navigation.addListener('didFocus', async () => {
-        const fetchedCurrent = await FirebaseWrapper.getInstance().getListsByStatus(
+        const fetchedList = await FirebaseWrapper.getInstance().getListsByStatus(
           this.props.tabName
         )
-        if (fetchedCurrent) {
+        if (fetchedList) {
           this.setState({
-            current: fetchedCurrent,
+            category: fetchedList,
           })
         }
       })
@@ -45,22 +49,27 @@ class HomeScreenTabs extends React.Component {
 
   render() {
     let listOfMovies = []
-    if (this.state.current.movie) {
-      listOfMovies = Object.values(this.state.current.movie)
+    let topFour = []
+    if (this.state.category.movie) {
+      listOfMovies = Object.values(this.state.category.movie)
+      topFour = listOfMovies.slice(0, 3)
+      topFour.push({ seeAll: seeAllMovieImg, id: 0 })
     }
     let listOfBooks = []
-    if (this.state.current.book) {
-      listOfBooks = Object.values(this.state.current.book)
+    if (this.state.category.book) {
+      listOfBooks = Object.values(this.state.category.book)
+      topFour = listOfMovies.slice(0, 3)
+      topFour.push({ seeAll: seeAllBooksImg, id: 0 })
     }
     let listOfTvShows = []
-    if (this.state.current.tvShow) {
-      listOfTvShows = Object.values(this.state.current.book)
+    if (this.state.category.tvShow) {
+      listOfTvShows = Object.values(this.state.category.book)
     }
 
     return (
       <View style={[styles.scene, { backgroundColor: '#212730' }]}>
         <FlatList
-          data={listOfMovies}
+          data={topFour}
           horizontal={true}
           containerStyle={{
             borderBottomWidth: 3,
@@ -70,15 +79,21 @@ class HomeScreenTabs extends React.Component {
             <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
               <TouchableOpacity
                 onPress={() =>
-                  this.props.navigation.navigate('MovieDetailsScreen', {
-                    movie: item,
-                  })
+                  item.seeAll
+                    ? this.props.navigation.navigate('SeeAllScreen', {
+                        movies: listOfMovies,
+                      })
+                    : this.props.navigation.navigate('MovieDetailsScreen', {
+                        movie: item,
+                      })
                 }
               >
                 <Image
                   style={styles.imageThumbnail}
                   source={{
-                    uri: `http://image.tmdb.org/t/p/original${item.poster}`,
+                    uri: item.seeAll
+                      ? item.seeAll
+                      : `http://image.tmdb.org/t/p/original${item.poster}`,
                   }}
                 />
               </TouchableOpacity>

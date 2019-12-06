@@ -13,3 +13,4 @@ firebase/firebaseConfig.js
 secrets.js
 node_modules
 functions/node_modules/*
+Test.js
