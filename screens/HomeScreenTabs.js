@@ -53,19 +53,28 @@ class HomeScreenTabs extends React.Component {
     let topFourMovies = []
     if (this.state.category.movie) {
       listOfMovies = Object.values(this.state.category.movie)
-      topFourMovies = listOfMovies.slice(0, 3)
+      topFourMovies = listOfMovies.slice(
+        0,
+        Math.floor(wp('100%') / hp('16.7%')) + 2
+      )
     }
     let listOfBooks = []
     let topFourBooks = []
     if (this.state.category.book) {
       listOfBooks = Object.values(this.state.category.book)
-      topFourBooks = listOfBooks.slice(0, 3)
+      topFourBooks = listOfBooks.slice(
+        0,
+        Math.floor(wp('100%') / hp('16.7%')) + 2
+      )
     }
     let listOfTvShows = []
     let topFourTvShows = []
     if (this.state.category.tvShow) {
       listOfTvShows = Object.values(this.state.category.tvShow)
-      topFourTvShows = listOfTvShows.slice(0, 3)
+      topFourTvShows = listOfTvShows.slice(
+        0,
+        Math.floor(wp('100%') / hp('16.7%')) + 2
+      )
     }
 
     return (
