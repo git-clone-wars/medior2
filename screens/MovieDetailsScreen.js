@@ -8,7 +8,6 @@ import {
   ScrollView,
   Image,
 } from 'react-native'
-import { Card } from 'react-native-elements'
 import AddToListModal from '../components/AddToList'
 
 import {
@@ -51,7 +50,7 @@ export default class MovieDetails extends React.Component {
             marginHorizontal: 0,
           }}
         >
-          <View style={{ marginTop: 50 }}>
+          <View style={{ marginTop: 25 }}>
             <View
               style={{ paddingBottom: 15, padding: 20, alignSelf: 'center' }}
             >

@@ -36,6 +36,7 @@ export default class AddToListModal extends React.Component {
   render() {
     return (
       <Modal
+        transparent={true}
         visible={this.state.visible}
         hasBackdrop={true}
         onBackdropPress={() => {
@@ -45,6 +46,7 @@ export default class AddToListModal extends React.Component {
       >
         <View style={styles.container}>
           <Button
+            color='#8bf6f5'
             title='Add to Current'
             onPress={() => {
               this.handleClick('current')
@@ -52,6 +54,7 @@ export default class AddToListModal extends React.Component {
             }}
           />
           <Button
+            color='#8bf6f5'
             title='Add to Plan to'
             onPress={() => {
               this.handleClick('planTo')
@@ -59,6 +62,7 @@ export default class AddToListModal extends React.Component {
             }}
           />
           <Button
+            color='#8bf6f5'
             title='Add to Completed'
             onPress={() => {
               this.handleClick('completed')
@@ -66,6 +70,7 @@ export default class AddToListModal extends React.Component {
             }}
           />
           <Button
+            color='#8bf6f5'
             title='Add to Dropped'
             onPress={() => {
               this.handleClick('dropped')
@@ -73,13 +78,14 @@ export default class AddToListModal extends React.Component {
             }}
           />
           <Button
+            color='#8bf6f5'
             title='Add to On Hold'
             onPress={() => {
               this.handleClick('onHold')
               this.props.toggleModal()
             }}
           />
-          <Button title='close' onPress={() => this.props.toggleModal()} />
+          <Button color='#8bf6f5' title='close' onPress={() => this.props.toggleModal()} />
         </View>
       </Modal>
     )

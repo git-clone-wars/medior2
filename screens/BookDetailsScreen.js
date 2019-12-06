@@ -1,8 +1,11 @@
 /* eslint-disable no-console */
 import * as React from 'react'
-import { Text, View, Button, SafeAreaView, ScrollView } from 'react-native'
-import { Card } from 'react-native-elements'
+import { Text, View, Button, SafeAreaView, ScrollView, Image } from 'react-native'
 import AddToListModal from '../components/AddToList'
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen'
 
 export default class BookDetails extends React.Component {
   constructor() {
@@ -41,21 +44,43 @@ export default class BookDetails extends React.Component {
             marginHorizontal: 0,
           }}
         >
-          <Card
-            title={`${book.title} by ${book.authors[0]}`}
-            image={{ uri: book.thumbnail }}
-            imageStyle={{
-              width: 200,
-              height: 275,
+          <View style={{ marginTop: 25 }}>
+            <View
+              style={{ paddingBottom: 15, padding: 20, alignSelf: 'center' }}
+            >
+              <Text
+                style={{
+                  color: '#CCCCCC',
+                  marginBottom: 20,
+                  textAlign: 'center',
+                }}
+              >
+                {`${book.title} by ${book.authors[0]}`}
+              </Text>
+            </View>
 
-              borderRadius: 10,
-              justifyContent: 'center',
+            <Image
+              source={{ uri: book.thumbnail }}
+              style={{
+                height: hp('35%'),
+                width: hp('24%'),
+                alignSelf: 'center',
+                bottom: 20,
+              }}
+            />
+          </View>
+          <View
+            style={{
+              padding: 20,
             }}
           >
-            <Text style={{ marginBottom: 10 }}>{book.longDesc}</Text>
-          </Card>
+            <Text style={{ marginBottom: 10, color: '#CCCCCC' }}>
+              Summary: {book.longDesc}
+            </Text>
+          </View>
           <Button
-            title='Add to your lists!'
+            title='Add to lists!'
+            color='#8bf6f5'
             onPress={() => {
               this.setState({ modalVisible: true })
             }}
@@ -63,6 +88,7 @@ export default class BookDetails extends React.Component {
           <Button
             onPress={() => this.props.navigation.goBack()}
             title='Dismiss'
+            color='#8bf6f5'
           />
           <AddToListModal
             visible={this.state.modalVisible}

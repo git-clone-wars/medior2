@@ -8,7 +8,6 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native'
-import { ListItem, List } from 'react-native-elements'
 import { FlatList } from 'react-native-gesture-handler'
 import FirebaseWrapper from '../firebase/firebase'
 import { withNavigationFocus } from 'react-navigation'
@@ -17,9 +16,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
 
-const seeAllMovieImg = require('../assets/images/seeallmovies.png')
-const seeAllBooksImg = require('../assets/images/seeAllBooks.png')
-const seeAllTVImg = require('../assets/images/seeAllTV.png')
 
 class HomeScreenTabs extends React.Component {
   constructor(props) {
