@@ -4,6 +4,11 @@ import { Text, View, Button, SafeAreaView, ScrollView } from 'react-native'
 import { Card } from 'react-native-elements'
 import AddToListModal from '../components/AddToList'
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen'
+
 export default class MovieDetails extends React.Component {
   constructor() {
     super()
@@ -38,11 +43,8 @@ export default class MovieDetails extends React.Component {
             title={`${movie.title} (${movie.date})`}
             image={{ uri: `http://image.tmdb.org/t/p/original${movie.poster}` }}
             imageStyle={{
-              width: 200,
-              height: 275,
-              // resizeMode: 'cover',
-              borderRadius: 10,
-              justifyContent: 'center',
+              width: hp('16.7%'),
+              height: hp('25%'),
             }}
           >
             <Text style={{ marginBottom: 10 }}>{movie.overview}</Text>
