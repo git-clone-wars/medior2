@@ -11,7 +11,7 @@ export const tvSearch = async query => {
       return data
     }
   } catch (error) {
-    'failed TV search:', error
+    console.error('failed TV search:', error)
   }
 }
 
