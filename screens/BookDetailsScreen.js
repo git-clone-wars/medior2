@@ -16,6 +16,14 @@ export default class BookDetails extends React.Component {
     this.setState({ modalVisible: !this.state.modalVisible })
   }
 
+  static navigationOptions = {
+    title: 'Details',
+    headerTintColor: '#CCCCCC',
+    headerStyle: {
+      backgroundColor: '#212730',
+    },
+  }
+
   render() {
     const { navigation } = this.props
     const book = navigation.getParam('book')

@@ -19,6 +19,14 @@ export default class Scanner extends React.Component {
     this.getPermissionsAsync()
   }
 
+  static navigationOptions = {
+    title: 'Scan a barcode!',
+    headerTintColor: '#CCCCCC',
+    headerStyle: {
+      backgroundColor: '#212730',
+    },
+  }
+
   getPermissionsAsync = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
     this.setState({ hasCameraPermission: status === 'granted' })
@@ -64,10 +72,12 @@ export default class Scanner extends React.Component {
       const sanitizedBookInfo = sanitizeBookData(foundBook.items[0])
 
       if (sanitizedBookInfo) {
-        this.props.navigation.navigate('BookDetailsScreen', { book: sanitizedBookInfo })
+        this.props.navigation.navigate('BookDetailsScreen', {
+          book: sanitizedBookInfo,
+        })
       }
     } catch (error) {
-      console.log(`sorry not found ${error}`)
+      console.error(`sorry not found ${error}`)
     }
   }
 }
