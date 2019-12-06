@@ -16,9 +16,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
 
-const seeAllMovieImg = require('assets/images/seeallmovies.png')
-const seeAllBooksImg = require('assets/images/seeAllBooks.png')
-const seeAllTVImg = require('assets/images/seeAllTV.png')
+const seeAllMovieImg = require('../assets/images/seeallmovies.png')
+const seeAllBooksImg = require('../assets/images/seeAllBooks.png')
+const seeAllTVImg = require('../assets/images/seeAllTV.png')
 
 class HomeScreenTabs extends React.Component {
   constructor(props) {
@@ -63,11 +63,20 @@ class HomeScreenTabs extends React.Component {
     }
     let listOfTvShows = []
     if (this.state.category.tvShow) {
-      listOfTvShows = Object.values(this.state.category.book)
+      listOfTvShows = Object.values(this.state.category.tvShow)
     }
 
     return (
       <View style={[styles.scene, { backgroundColor: '#212730' }]}>
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('SeeAllScreen', {
+              movies: listOfMovies,
+            })
+          }
+        >
+          <Text style={{ color: '#a33f34' }}>See All Movies</Text>
+        </TouchableOpacity>
         <FlatList
           data={topFour}
           horizontal={true}
@@ -79,21 +88,15 @@ class HomeScreenTabs extends React.Component {
             <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
               <TouchableOpacity
                 onPress={() =>
-                  item.seeAll
-                    ? this.props.navigation.navigate('SeeAllScreen', {
-                        movies: listOfMovies,
-                      })
-                    : this.props.navigation.navigate('MovieDetailsScreen', {
-                        movie: item,
-                      })
+                  this.props.navigation.navigate('MovieDetailsScreen', {
+                    movie: item,
+                  })
                 }
               >
                 <Image
                   style={styles.imageThumbnail}
                   source={{
-                    uri: item.seeAll
-                      ? item.seeAll
-                      : `http://image.tmdb.org/t/p/original${item.poster}`,
+                    uri: `http://image.tmdb.org/t/p/original${item.poster}`,
                   }}
                 />
               </TouchableOpacity>
@@ -101,6 +104,15 @@ class HomeScreenTabs extends React.Component {
           )}
           keyExtractor={item => item['id'].toString()}
         />
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('SeeAllScreen', {
+              books: listOfBooks,
+            })
+          }
+        >
+          <Text style={{ color: '#a33f34' }}>See All Books</Text>
+        </TouchableOpacity>
         <FlatList
           data={listOfBooks}
           horizontal={true}
@@ -128,7 +140,16 @@ class HomeScreenTabs extends React.Component {
           )}
           keyExtractor={item => item.ISBN}
         />
-        {/* <FlatList
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('SeeAllScreen', {
+              tvShows: listOfTvShows,
+            })
+          }
+        >
+          <Text style={{ color: '#a33f34' }}>See All TV Shows</Text>
+        </TouchableOpacity>
+        <FlatList
           data={listOfTvShows}
           horizontal={true}
           containerStyle={{
@@ -154,7 +175,7 @@ class HomeScreenTabs extends React.Component {
             </View>
           )}
           keyExtractor={item => item.id}
-        /> */}
+        />
       </View>
     )
   }
