@@ -17,6 +17,7 @@ import BookDetails from '../screens/BookDetailsScreen'
 import MovieDetails from '../screens/MovieDetailsScreen'
 import TVDetails from '../screens/TVDetailsScreen'
 import SearchScreen from '../screens/SearchScreen'
+import SeeAll from '../screens/SeeAllScreen'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -27,7 +28,8 @@ const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
     BookDetailsScreen: BookDetails,
-    MovieDetailsScreen: MovieDetails
+    MovieDetailsScreen: MovieDetails,
+    SeeAllScreen: SeeAll,
   },
   config
 )

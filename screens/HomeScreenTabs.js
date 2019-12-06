@@ -16,11 +16,15 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
 
+const seeAllMovieImg = require('../assets/images/seeallmovies.png')
+const seeAllBooksImg = require('../assets/images/seeAllBooks.png')
+const seeAllTVImg = require('../assets/images/seeAllTV.png')
+
 class HomeScreenTabs extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      current: {},
+      category: {},
     }
   }
 
@@ -29,12 +33,12 @@ class HomeScreenTabs extends React.Component {
       const { navigation } = this.props
 
       this.focusListener = navigation.addListener('didFocus', async () => {
-        const fetchedCurrent = await FirebaseWrapper.getInstance().getListsByStatus(
+        const fetchedList = await FirebaseWrapper.getInstance().getListsByStatus(
           this.props.tabName
         )
-        if (fetchedCurrent) {
+        if (fetchedList) {
           this.setState({
-            current: fetchedCurrent,
+            category: fetchedList,
           })
         }
       })
@@ -45,22 +49,36 @@ class HomeScreenTabs extends React.Component {
 
   render() {
     let listOfMovies = []
-    if (this.state.current.movie) {
-      listOfMovies = Object.values(this.state.current.movie)
+    let topFour = []
+    if (this.state.category.movie) {
+      listOfMovies = Object.values(this.state.category.movie)
+      topFour = listOfMovies.slice(0, 3)
+      topFour.push({ seeAll: seeAllMovieImg, id: 0 })
     }
     let listOfBooks = []
-    if (this.state.current.book) {
-      listOfBooks = Object.values(this.state.current.book)
+    if (this.state.category.book) {
+      listOfBooks = Object.values(this.state.category.book)
+      topFour = listOfMovies.slice(0, 3)
+      topFour.push({ seeAll: seeAllBooksImg, id: 0 })
     }
     let listOfTvShows = []
-    if (this.state.current.tvShow) {
-      listOfTvShows = Object.values(this.state.current.book)
+    if (this.state.category.tvShow) {
+      listOfTvShows = Object.values(this.state.category.tvShow)
     }
 
     return (
       <View style={[styles.scene, { backgroundColor: '#212730' }]}>
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('SeeAllScreen', {
+              movies: listOfMovies,
+            })
+          }
+        >
+          <Text style={{ color: '#a33f34' }}>See All Movies</Text>
+        </TouchableOpacity>
         <FlatList
-          data={listOfMovies}
+          data={topFour}
           horizontal={true}
           containerStyle={{
             borderBottomWidth: 3,
@@ -86,6 +104,15 @@ class HomeScreenTabs extends React.Component {
           )}
           keyExtractor={item => item['id'].toString()}
         />
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('SeeAllScreen', {
+              books: listOfBooks,
+            })
+          }
+        >
+          <Text style={{ color: '#a33f34' }}>See All Books</Text>
+        </TouchableOpacity>
         <FlatList
           data={listOfBooks}
           horizontal={true}
@@ -113,7 +140,16 @@ class HomeScreenTabs extends React.Component {
           )}
           keyExtractor={item => item.ISBN}
         />
-        {/* <FlatList
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('SeeAllScreen', {
+              tvShows: listOfTvShows,
+            })
+          }
+        >
+          <Text style={{ color: '#a33f34' }}>See All TV Shows</Text>
+        </TouchableOpacity>
+        <FlatList
           data={listOfTvShows}
           horizontal={true}
           containerStyle={{
@@ -139,7 +175,7 @@ class HomeScreenTabs extends React.Component {
             </View>
           )}
           keyExtractor={item => item.id}
-        /> */}
+        />
       </View>
     )
   }
