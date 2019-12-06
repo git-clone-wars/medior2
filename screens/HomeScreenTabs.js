@@ -16,10 +16,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
 
-const seeAllMovieImg = require('assets/images/seeallmovies.png')
-const seeAllBooksImg = require('assets/images/seeAllBooks.png')
-const seeAllTVImg = require('assets/images/seeAllTV.png')
-
 class HomeScreenTabs extends React.Component {
   constructor(props) {
     super(props)
@@ -53,13 +49,13 @@ class HomeScreenTabs extends React.Component {
     if (this.state.category.movie) {
       listOfMovies = Object.values(this.state.category.movie)
       topFour = listOfMovies.slice(0, 3)
-      topFour.push({ seeAll: seeAllMovieImg, id: 0 })
+      topFour.push({ seeAll: 'https://imgur.com/dZc4xOM', id: 0 })
     }
     let listOfBooks = []
     if (this.state.category.book) {
       listOfBooks = Object.values(this.state.category.book)
       topFour = listOfMovies.slice(0, 3)
-      topFour.push({ seeAll: seeAllBooksImg, id: 0 })
+      topFour.push({ seeAll: 'https://imgur.com/exItfUn', id: 0 })
     }
     let listOfTvShows = []
     if (this.state.category.tvShow) {
