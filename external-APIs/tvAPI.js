@@ -3,12 +3,11 @@ import axios from 'axios'
 
 export const tvSearch = async query => {
   try {
-    // console.log('tryingToSearch')
     if (query.length > 0) {
       const { data } = await axios.get(
         `https://api.themoviedb.org/3/search/tv?api_key=${movie_api}&language=en-US&query=${query}&page=1`
       )
-      // console.log(data)
+
       return data
     }
   } catch (error) {

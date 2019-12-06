@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
 } from 'react-native'
 import { ListItem, List } from 'react-native-elements'
 import { FlatList } from 'react-native-gesture-handler'
@@ -49,25 +50,27 @@ class HomeScreenTabs extends React.Component {
 
   render() {
     let listOfMovies = []
-    let topFour = []
+    let topFourMovies = []
     if (this.state.category.movie) {
       listOfMovies = Object.values(this.state.category.movie)
-      topFour = listOfMovies.slice(0, 3)
-      topFour.push({ seeAll: seeAllMovieImg, id: 0 })
+      topFourMovies = listOfMovies.slice(0, 3)
     }
     let listOfBooks = []
+    let topFourBooks = []
     if (this.state.category.book) {
       listOfBooks = Object.values(this.state.category.book)
-      topFour = listOfMovies.slice(0, 3)
-      topFour.push({ seeAll: seeAllBooksImg, id: 0 })
+      topFourBooks = listOfBooks.slice(0, 3)
     }
     let listOfTvShows = []
+    let topFourTvShows = []
     if (this.state.category.tvShow) {
       listOfTvShows = Object.values(this.state.category.tvShow)
+      topFourTvShows = listOfTvShows.slice(0, 3)
     }
+    console.log(listOfTvShows)
 
     return (
-      <View style={[styles.scene, { backgroundColor: '#212730' }]}>
+      <ScrollView style={[styles.scene, { backgroundColor: '#212730' }]}>
         <TouchableOpacity
           onPress={() =>
             this.props.navigation.navigate('SeeAllScreen', {
@@ -78,7 +81,7 @@ class HomeScreenTabs extends React.Component {
           <Text style={{ color: '#a33f34' }}>See All Movies</Text>
         </TouchableOpacity>
         <FlatList
-          data={topFour}
+          data={topFourMovies}
           horizontal={true}
           containerStyle={{
             borderBottomWidth: 3,
@@ -114,7 +117,7 @@ class HomeScreenTabs extends React.Component {
           <Text style={{ color: '#a33f34' }}>See All Books</Text>
         </TouchableOpacity>
         <FlatList
-          data={listOfBooks}
+          data={topFourBooks}
           horizontal={true}
           containerStyle={{
             borderBottomWidth: 3,
@@ -138,7 +141,7 @@ class HomeScreenTabs extends React.Component {
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={item => item.ISBN}
+          keyExtractor={item => item.ISBN.toString()}
         />
         <TouchableOpacity
           onPress={() =>
@@ -150,7 +153,7 @@ class HomeScreenTabs extends React.Component {
           <Text style={{ color: '#a33f34' }}>See All TV Shows</Text>
         </TouchableOpacity>
         <FlatList
-          data={listOfTvShows}
+          data={topFourTvShows}
           horizontal={true}
           containerStyle={{
             borderBottomWidth: 3,
@@ -160,23 +163,23 @@ class HomeScreenTabs extends React.Component {
             <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
               <TouchableOpacity
                 onPress={() =>
-                  this.props.navigation.navigate('BookDetailsScreen', {
-                    book: item,
+                  this.props.navigation.navigate('TVDetailsScreen', {
+                    tv: item,
                   })
                 }
               >
                 <Image
                   style={styles.imageThumbnail}
                   source={{
-                    uri: item.thumbnail,
+                    uri: `http://image.tmdb.org/t/p/original${item.poster}`,
                   }}
                 />
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item['id'].toString()}
         />
-      </View>
+      </ScrollView>
     )
   }
 }
