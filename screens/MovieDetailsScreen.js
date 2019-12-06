@@ -20,10 +20,16 @@ export default class MovieDetails extends React.Component {
   toggleModal() {
     this.setState({ modalVisible: !this.state.modalVisible })
   }
+  static navigationOptions = {
+    title: 'Details',
+    headerTintColor: '#CCCCCC',
+    headerStyle: {
+      backgroundColor: '#212730',
+    },
+  }
   render() {
     const { navigation } = this.props
     const movie = navigation.getParam('movie')
-    console.log(movie)
     return (
       <SafeAreaView
         style={{
@@ -52,7 +58,6 @@ export default class MovieDetails extends React.Component {
           <Button
             title='Add to Lists'
             onPress={() => {
-              console.log('clicked')
               this.setState({ modalVisible: true })
             }}
           />

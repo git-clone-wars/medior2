@@ -35,7 +35,13 @@ export default class Search extends React.Component {
       tvResults: [],
     }
   }
-
+  static navigationOptions = {
+    title: 'Search',
+    headerTintColor: '#CCCCCC',
+    headerStyle: {
+      backgroundColor: '#212730',
+    },
+  }
   handleSearch = query => {
     this.setState({ query }, () => this.fetchData())
     // initialize/reset set timeout (callback, will call fetchdata)
@@ -57,8 +63,6 @@ export default class Search extends React.Component {
   fetchData = _.debounce(() => {
     movieSearch(this.state.query)
       .then(res => {
-        console.log(res)
-        console.log(res.results.length, 'movies returned')
         const formattedM = res.results.map(result => {
           return sanitizeMovieData(result)
         })
@@ -68,12 +72,10 @@ export default class Search extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error) //to catch the errors if any
+        console.error(error) //to catch the errors if any
       })
     bookSearch(this.state.query)
       .then(responseJson => {
-        // console.log(responseJson.items.length, 'books returned')
-
         const formattedB = responseJson.items.map(item => {
           return sanitizeBookData(item)
         })
@@ -83,11 +85,10 @@ export default class Search extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
       })
     tvSearch(this.state.query)
       .then(resJson => {
-        // console.log(responseJson.results.length, 'TV shows returned')
         const formattedT = resJson.results.map(result => {
           return sanitizeTVData(result)
         })
@@ -97,7 +98,7 @@ export default class Search extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error) //to catch the errors if any
+        console.error(error) //to catch the errors if any
       })
   }, 1000)
 

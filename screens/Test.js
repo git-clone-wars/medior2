@@ -24,13 +24,11 @@ export default class Test extends React.Component {
   }
 
   render() {
-    console.log('test-modalVisible:', this.state.modalVisible)
     return (
       <View>
         <Button
           title='click!'
           onPress={() => {
-            console.log('clicked')
             this.setState({ modalVisible: true })
           }}
         />
@@ -41,7 +39,6 @@ export default class Test extends React.Component {
             const lists = await FirebaseWrapper.getInstance().getListsByStatus(
               'onHold'
             )
-            console.log(lists)
           }}
         />
         <Button
@@ -50,7 +47,6 @@ export default class Test extends React.Component {
             const lists = await FirebaseWrapper.getInstance().getListsByMedia(
               'book'
             )
-            console.log(lists)
           }}
         />
 
