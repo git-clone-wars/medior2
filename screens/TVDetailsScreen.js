@@ -52,6 +52,20 @@ export default class TVDetails extends React.Component {
           }}
         >
           <View style={{ marginTop: 50 }}>
+            <View
+              style={{ paddingBottom: 15, padding: 20, alignSelf: 'center' }}
+            >
+              <Text
+                style={{
+                  color: '#CCCCCC',
+                  marginBottom: 20,
+                  textAlign: 'center',
+                }}
+              >
+                {`${tv.titleDate}`}
+              </Text>
+            </View>
+
             <Image
               source={{ uri: `http://image.tmdb.org/t/p/original${tv.poster}` }}
               style={{
@@ -94,21 +108,3 @@ export default class TVDetails extends React.Component {
     )
   }
 }
-
-// justifyContent: 'center',
-// alignItems: 'center',
-// height: hp('25%'),
-// width: hp('16.7%'),
-// borderRadius: 10,
-// justifyContent: 'center',
-// flex: 1,
-// resizeMode: 'cover',
-
-// containerStyle={{ padding: 20, flex: 0 }}
-// title={`${tv['titleDate']}`}
-// image={{ uri: `http://image.tmdb.org/t/p/original${tv.poster}` }}
-// imageStyle={{
-//   height: hp('25%'),
-//   width: hp('16.7%'),
-//   resizeMode: 'contain',
-// }}
