@@ -15,10 +15,17 @@ export default class TVDetails extends React.Component {
   toggleModal() {
     this.setState({ modalVisible: !this.state.modalVisible })
   }
+
+  static navigationOptions = {
+    title: 'Details',
+    headerTintColor: '#CCCCCC',
+    headerStyle: {
+      backgroundColor: '#212730',
+    },
+  }
   render() {
     const { navigation } = this.props
     const tv = navigation.getParam('tv')
-    // console.log(tv)
     return (
       <SafeAreaView
         style={{
@@ -50,7 +57,6 @@ export default class TVDetails extends React.Component {
           <Button
             title='Add to Lists'
             onPress={() => {
-              console.log('clicked')
               this.setState({ modalVisible: true })
             }}
           />

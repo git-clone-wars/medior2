@@ -1,14 +1,8 @@
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions, SafeAreaView
-} from 'react-native'
+import { StyleSheet, Text, View, Dimensions, SafeAreaView } from 'react-native'
 import { TabView, TabBar } from 'react-native-tab-view'
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
 import HomeScreenTabs from './HomeScreenTabs'
-
 
 export default class HomeScreen extends React.Component {
   constructor() {
@@ -22,7 +16,14 @@ export default class HomeScreen extends React.Component {
         { key: 'pause-circle' },
         { key: 'close-outline' },
       ],
-    };
+    }
+  }
+  static navigationOptions = {
+    title: 'Home',
+    headerTintColor: '#CCCCCC',
+    headerStyle: {
+      backgroundColor: '#212730',
+    },
   }
 
   render() {
@@ -47,20 +48,18 @@ export default class HomeScreen extends React.Component {
         }}
         onIndexChange={index => this.setState({ index })}
         initialLayout={{ width: Dimensions.get('window').width }}
-        renderTabBar={props => <TabBar
-          {...props}
-          style={{ backgroundColor: '#212730' }}
-          activeColor='#8bf6f5'
-          inactiveColor='#CCCCCC'
-          indicatorStyle={{ backgroundColor: '#a33f34' }}
-          renderIcon={({ route, focused, color }) => (
-            <Icons
-              name={route.key}
-              color={color}
-              size={22}
-            />
-          )}
-        />}
+        renderTabBar={props => (
+          <TabBar
+            {...props}
+            style={{ backgroundColor: '#212730' }}
+            activeColor='#8bf6f5'
+            inactiveColor='#CCCCCC'
+            indicatorStyle={{ backgroundColor: '#a33f34' }}
+            renderIcon={({ route, focused, color }) => (
+              <Icons name={route.key} color={color} size={22} />
+            )}
+          />
+        )}
       />
     )
   }
@@ -70,5 +69,4 @@ const styles = StyleSheet.create({
   scene: {
     flex: 1,
   },
-});
-
+})
