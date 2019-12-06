@@ -3,16 +3,14 @@ import axios from 'axios'
 
 export const movieSearch = async query => {
   try {
-    // console.log('tryingToSearch')
     if (query.length > 0) {
       const { data } = await axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=${movie_api}&query=${query}`
       )
-      // console.log(data)
       return data
     }
   } catch (error) {
-    console.log('failed movie search:', error)
+    console.error('failed movie search:', error)
   }
 }
 

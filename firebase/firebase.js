@@ -36,7 +36,7 @@ export default class FirebaseWrapper {
     } catch (error) {
       var errorCode = error.code
       var errorMessage = error.message
-      console.log('Trouble signing in ?', errorCode, errorMessage)
+      console.error('Trouble signing in ?', errorCode, errorMessage)
     }
   }
 
@@ -44,7 +44,7 @@ export default class FirebaseWrapper {
     try {
       this._firebaseInstance.auth().signOut()
     } catch (error) {
-      console.log('Trouble signing out ?', error)
+      console.error('Trouble signing out ?', error)
     }
   }
 
@@ -71,7 +71,7 @@ export default class FirebaseWrapper {
     } catch (error) {
       var errorCode = error.code
       var errorMessage = error.message
-      console.log('Trouble signing up ?', errorCode, errorMessage)
+      console.error('Trouble signing up ?', errorCode, errorMessage)
     }
   }
 

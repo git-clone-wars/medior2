@@ -67,7 +67,6 @@ class HomeScreenTabs extends React.Component {
       listOfTvShows = Object.values(this.state.category.tvShow)
       topFourTvShows = listOfTvShows.slice(0, 3)
     }
-    console.log(listOfTvShows)
 
     return (
       <ScrollView style={[styles.scene, { backgroundColor: '#212730' }]}>

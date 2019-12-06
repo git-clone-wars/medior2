@@ -8,7 +8,7 @@ export const isbnScanSearch = async query => {
     )
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -21,7 +21,7 @@ export const bookSearch = async query => {
       return data
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -57,6 +57,5 @@ export const sanitizeBookData = item => {
       ? item.volumeInfo.imageLinks.thumbnail
       : 'https://tinyurl.com/vuvlh4g'
 
-  // console.log('BOOKS FORMATTED', formattedQuery)
   return formattedQuery
 }

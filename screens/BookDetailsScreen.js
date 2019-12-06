@@ -27,7 +27,6 @@ export default class BookDetails extends React.Component {
   render() {
     const { navigation } = this.props
     const book = navigation.getParam('book')
-    // console.log(book)
     return (
       <SafeAreaView
         style={{
@@ -58,7 +57,6 @@ export default class BookDetails extends React.Component {
           <Button
             title='Add to your lists!'
             onPress={() => {
-              console.log('clicked')
               this.setState({ modalVisible: true })
             }}
           />
