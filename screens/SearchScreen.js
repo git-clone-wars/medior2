@@ -43,8 +43,8 @@ export default class Search extends React.Component {
     },
   }
   handleSearch = query => {
+    console.log('HERE IS THE QUERY', query)
     this.setState({ query }, () => this.fetchData())
-    // initialize/reset set timeout (callback, will call fetchdata)
   }
 
   renderSeparator = () => {
@@ -61,6 +61,9 @@ export default class Search extends React.Component {
   }
 
   fetchData = _.debounce(() => {
+    if (this.state.query.length === 0) {
+      return
+    }
     movieSearch(this.state.query)
       .then(res => {
         const formattedM = res.results.map(result => {
@@ -113,6 +116,7 @@ export default class Search extends React.Component {
           value={this.state.query}
           darkTheme
           round
+          //onClear={()}
         />
         <SearchTabs
           detailsNav={this.props.navigation}
