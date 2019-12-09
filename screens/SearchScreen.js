@@ -62,7 +62,7 @@ export default class Search extends React.Component {
 
   fetchData = _.debounce(() => {
     if (this.state.query.length === 0) {
-      return
+      return []
     }
     movieSearch(this.state.query)
       .then(res => {
@@ -79,6 +79,7 @@ export default class Search extends React.Component {
       })
     bookSearch(this.state.query)
       .then(responseJson => {
+        console.log(responseJson)
         const formattedB = responseJson.items.map(item => {
           return sanitizeBookData(item)
         })

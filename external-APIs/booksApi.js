@@ -50,7 +50,12 @@ export const sanitizeBookData = item => {
     : ''
   // longer description
 
-  formattedQuery['ISBN'] = item.volumeInfo.industryIdentifiers[0].identifier
+  formattedQuery['ISBN'] =
+    item.volumeInfo &&
+    item.volumeInfo.industryIdentifiers &&
+    item.volumeInfo.industryIdentifiers[0].identifier
+      ? item.volumeInfo.industryIdentifiers[0].identifier
+      : item.id
 
   formattedQuery['thumbnail'] =
     item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail
