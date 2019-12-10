@@ -1,27 +1,12 @@
 import * as React from 'react'
-import {
-  Text,
-  View,
-  Button,
-  SectionList,
-  SafeAreaView,
-  StyleSheet,
-  Dimensions,
-  FlatList,
-} from 'react-native'
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from '@expo/vector-icons'
-import { SearchBar, List, ListItem } from 'react-native-elements'
+import { View, SafeAreaView } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { SearchBar } from 'react-native-elements'
 import { movieSearch, sanitizeMovieData } from '../external-APIs/moviesApi'
 import { bookSearch, sanitizeBookData } from '../external-APIs/booksApi'
 import { tvSearch, sanitizeTVData } from '../external-APIs/tvAPI'
 
 import _ from 'lodash'
-
-import { TabView, SceneMap } from 'react-native-tab-view'
 
 import SearchTabs from './SearchTabs'
 
@@ -43,7 +28,6 @@ export default class Search extends React.Component {
     },
   }
   handleSearch = query => {
-    console.log('HERE IS THE QUERY', query)
     this.setState({ query }, () => this.fetchData())
   }
 
@@ -79,7 +63,6 @@ export default class Search extends React.Component {
       })
     bookSearch(this.state.query)
       .then(responseJson => {
-        console.log(responseJson)
         const formattedB = responseJson.items.map(item => {
           return sanitizeBookData(item)
         })

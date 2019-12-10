@@ -28,7 +28,7 @@ export default class App extends Component {
       }
     )
   }
-  s
+
   componentWillUnmount() {
     if (this.unsubscriber) {
       this.unsubscriber()
