@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput, Button, Modal } from 'react-native'
+import { View, StyleSheet, Button, Modal } from 'react-native'
 import FirebaseWrapper from '../firebase/firebase'
 import t from 'tcomb-form-native'
 import { setRecoveryProps } from 'expo/build/ErrorRecovery/ErrorRecovery'

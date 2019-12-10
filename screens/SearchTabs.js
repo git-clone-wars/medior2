@@ -1,14 +1,6 @@
 import * as React from 'react'
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Text,
-  FlatList,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native'
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
+import { View, StyleSheet, Dimensions, Text, FlatList } from 'react-native'
+import { TabView, TabBar } from 'react-native-tab-view'
 import { ListItem } from 'react-native-elements'
 
 export default class SearchTabs extends React.Component {

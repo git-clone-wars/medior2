@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native'
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 
 import {
