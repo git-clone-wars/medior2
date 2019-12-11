@@ -1,7 +1,7 @@
 import { Asset } from 'expo-asset'
 import * as Font from 'expo-font'
 import React, { Component } from 'react'
-import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native'
+import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import FirebaseWrapper from './firebase/firebase'
 import { firebaseConfig } from './firebase/firebaseConfig'
@@ -42,6 +42,7 @@ export default class App extends Component {
           {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
           <AppNavigator />
         </View>
+
       )
     } else {
       return (

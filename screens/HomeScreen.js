@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Dimensions, SafeAreaView } from 'react-native'
+import { Dimensions } from 'react-native'
 import { TabView, TabBar } from 'react-native-tab-view'
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
 import HomeScreenTabs from './HomeScreenTabs'
@@ -65,8 +65,4 @@ export default class HomeScreen extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  scene: {
-    flex: 1,
-  },
-})
+

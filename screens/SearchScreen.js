@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, SafeAreaView } from 'react-native'
+import { View } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { SearchBar } from 'react-native-elements'
 import { movieSearch, sanitizeMovieData } from '../external-APIs/moviesApi'
@@ -91,7 +91,7 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <SearchBar
           placeholder='Search Movies, Books, TV Shows...'
           onChangeText={this.handleSearch}
@@ -100,7 +100,6 @@ export default class Search extends React.Component {
           value={this.state.query}
           darkTheme
           round
-          //onClear={()}
         />
         <SearchTabs
           detailsNav={this.props.navigation}
@@ -108,7 +107,7 @@ export default class Search extends React.Component {
           books={this.state.bookResults}
           tv={this.state.tvResults}
         />
-      </SafeAreaView>
+      </View>
     )
   }
 }

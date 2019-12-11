@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import * as React from 'react'
-import { Text, View, Button, SafeAreaView, ScrollView, Image } from 'react-native'
+import { Text, View, Button, ScrollView, Image } from 'react-native'
 import AddToListModal from '../components/AddToList'
 import {
   widthPercentageToDP as wp,
@@ -31,7 +31,7 @@ export default class BookDetails extends React.Component {
     const { navigation } = this.props
     const book = navigation.getParam('book')
     return (
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
           alignItems: 'center',
@@ -97,7 +97,7 @@ export default class BookDetails extends React.Component {
             toggleModal={this.toggleModal}
           />
         </ScrollView>
-      </SafeAreaView>
+      </View>
     )
   }
 }

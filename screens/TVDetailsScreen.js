@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Button,
-  SafeAreaView,
   ScrollView,
   Image,
 } from 'react-native'
@@ -37,7 +36,7 @@ export default class TVDetails extends React.Component {
     const { navigation } = this.props
     const tv = navigation.getParam('tv')
     return (
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
           alignItems: 'center',
@@ -103,7 +102,7 @@ export default class TVDetails extends React.Component {
             />
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </View>
     )
   }
 }

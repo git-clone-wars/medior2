@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Button,
-  SafeAreaView,
   ScrollView,
   Image,
 } from 'react-native'
@@ -37,7 +36,7 @@ export default class MovieDetails extends React.Component {
     const { navigation } = this.props
     const movie = navigation.getParam('movie')
     return (
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
           alignItems: 'center',
@@ -106,7 +105,7 @@ export default class MovieDetails extends React.Component {
             toggleModal={this.toggleModal}
           />
         </ScrollView>
-      </SafeAreaView>
+      </View>
     )
   }
 }
